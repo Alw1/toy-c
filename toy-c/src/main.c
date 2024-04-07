@@ -21,7 +21,7 @@ int debug_code_gen = 0;
 int verbose = 0;
 int help = 0;
 
-char version[100] = "Toy-C Version -99.2";
+char version[100] = "Toy-C Version -99.9";
 char class_filename[100] = "";
 char output_filename[100] = "";
 char source_filename[100] = "";
@@ -45,14 +45,8 @@ int main(int argc, char *argv[]){
         printHelpMessage();
 
     Scanner scanner = createScanner(source_file);
-
-    ////Token Scanner Debug Loop
-    // do{
-    //     getNextToken(scanner);
-    //     printToken(scanner->curr_token);
-    // }while(getTokenType(scanner->curr_token)!=ENDFILE);
-
     ProgramST program_ast = Program(scanner);  
+    //generateJasminCode(program_ast);
 
     if(debug_scanner)
         printf("[SCANNER] total tokens: %d\n", scanner->token_tot-1);

@@ -1,3 +1,7 @@
+/*
+    Created by Alex Wyatt Spring 2023
+*/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -42,7 +46,14 @@ void addSymbol(SymTable st, Symbol s){
 }
 
 Symbol getSymbol(SymTable st,int index){
-    return st->arr[index-1333];
+
+    if(index > st->size || index < 0)
+    {
+        printf("ERROR: Index out of bounds\n");
+        exit(0);
+    }
+
+    return st->arr[index-1];
 }
 
 int findSymbol(SymTable st, char *id){
