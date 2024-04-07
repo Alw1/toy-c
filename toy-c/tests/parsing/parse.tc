@@ -3,7 +3,15 @@ int b;
 int c;
 
 int main(){
-   //int a;
-   char d;
+   int a;
+   //char d;
+   int x;
+   int y;
+   //int z;
+}
 
+int x(){
+   int a;
+   int b;
+   char z;
 }

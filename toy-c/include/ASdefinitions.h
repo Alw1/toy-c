@@ -27,7 +27,7 @@ char *FuncDefST_ToString(FuncDefST ast);
 char *VarDefST_ToString(VarDefST ast);
 
 void printFuncSymTable(FuncDefST st);
-
+char *getVarDef_ID(VarDefST st);
 
 
 #endif

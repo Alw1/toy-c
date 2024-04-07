@@ -117,14 +117,20 @@ char *VarDefST_ToString(VarDefST ast){;
 }
 
 void addBlockStateFuncDefST(FuncDefST ast, BlockStateST block){
+    //For Symbol Table of Functions
+    addFuncSymbols(ast->sym_table,block);
     ast->block_state = block;
 }
 
 void addFuncDefVarDefST(FuncDefST ast, VarDefST def){
-  addSymbol(ast->sym_table,createSymbol(VAR,toString_ID(def->id[0])));
+//addSymbol(ast->sym_table,createSymbol(VAR,toString_ID(def->id[0])));
   ast->vardef_tree[ast->vardef_index++] = def;
 }
 
 void printFuncSymTable(FuncDefST st){
    printSymTable(st->sym_table);
+}
+
+char *getVarDef_ID(VarDefST st){
+    return toString_ID(st->id[0]);
 }

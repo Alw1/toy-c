@@ -10,7 +10,7 @@
 #include "ASexpressions.h"
 #include "ASstatements.h"
 #include "ASdefinitions.h"
-
+#include "TCSymbols.h"
 
 enum statement_prod {EXPR_STATE, BREAK_STATE, BLOCK_STATE, IF_STATE, NULL_STATE, RETURN_STATE, WHILE_STATE, READ_STATE, WRITE_STATE, NEWLINE_STATE, NO_STATE};
 
@@ -64,5 +64,7 @@ void addWriteStateExpressionST(WriteStateST, ExpressionST);
 void addBlockStateVarDefST(BlockStateST, VarDefST);
 void addBlockStateStatementST(BlockStateST, StatementST);
 
+
+void addFuncSymbols(SymTable st, BlockStateST ast);
 
 #endif

@@ -62,7 +62,6 @@ void printSymbol(Symbol s){
     }
 }
 
-
 void addSymbol(SymTable st, Symbol s){
     if(st->size == MAX_SYMS){
         printf("ERROR: SYMBOL TABLE OVERFLOW\n");
@@ -70,21 +69,26 @@ void addSymbol(SymTable st, Symbol s){
     }
 
     if(findSymbol(st,s->id)){
-        printf("ERROR: symbol already defined %s\n",s->id);
+        switch(s->type){
+            case VAR:
+                printf("Error: Variable %s already defined\n",s->id);
+            case FUNC:
+                printf("Error: Function %s already defined\n",s->id);
+            default:
+                exit(0);
+        }
         exit(0);
     }
-
+    
     st->arr[st->size++] = s;
 }
 
 Symbol getSymbol(SymTable st,int index){
-
-    if(index > st->size || index < 0)
-    {
+    if(index > st->size || index < 0){
         printf("ERROR: Index out of bounds\n");
         exit(0);
     }
-
+    
     return st->arr[index-1];
 }
 

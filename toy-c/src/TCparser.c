@@ -75,7 +75,7 @@ ProgramST Program(Scanner s){
       addDefinition(program,Definition(s));
     }
     
-
+    printf("Global Sym Table\n");
     printSymTable(global_st);
     match(ENDFILE, s);
     exiting("Program");
@@ -103,8 +103,7 @@ DefinitionST Definition(Scanner s){
       printFuncSymTable(f);
       printf("\n");
     }
-    
-    
+
     exiting("Definition");
     return def;
 }
@@ -173,15 +172,14 @@ BlockStateST CompoundStatement(Scanner s){
       if(getTokenType(s->curr_token) == INT){
         Token type = s->curr_token; match(INT, s);
         Token id = s->curr_token; match(ID, s);
-       addSymbol(global_st,createSymbol(VAR,toString_ID(id)));
+        //addSymbol(global_st,createSymbol(VAR,toString_ID(id)));
         addBlockStateVarDefST(block_state, createVarDefST(type,id));
         match(SEMICOLON, s);
       }
       else if(getTokenType(s->curr_token) == CHAR){
         Token type = s->curr_token; match(CHAR, s);
         Token id = s->curr_token; match(ID, s);
-
-        addSymbol(global_st,createSymbol(FUNC,toString_ID(id)));
+        //addSymbol(global_st,createSymbol(FUNC,toString_ID(id)));
         addBlockStateVarDefST(block_state, createVarDefST(type,id));
         match(SEMICOLON, s);
       }

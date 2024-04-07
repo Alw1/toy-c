@@ -317,3 +317,10 @@ void addBlockStateVarDefST(BlockStateST ast, VarDefST def){
 void addBlockStateStatementST(BlockStateST ast, StatementST statement){
   ast->statement_tree[ast->statement_index++] = statement;
 }
+
+void addFuncSymbols(SymTable st, BlockStateST ast){
+  for(int x=0;x<ast->vardef_index;x++)
+  {
+      addSymbol(st, createSymbol(VAR,getVarDef_ID(ast->vardef_tree[x])));
+  }
+}
