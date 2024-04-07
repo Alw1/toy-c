@@ -1,0 +1,29 @@
+int main(int a, int b, char c, char d){
+    char x;
+
+  
+    write("ENTER NUMBER");
+    read(a);
+
+    while(z < a){
+        write("TEST ",a);
+        newline;
+        z = (z+a) -   5;
+
+    }
+
+
+    if(1==1){
+        char random;
+        random = 'a';
+        write(a);
+    }
+    else    
+        return;
+
+    "HELLO"; 
+    newline; 
+
+    (-50 * a);
+    return -70E-6; 
+    }

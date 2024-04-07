@@ -1,0 +1,8 @@
+ int a;
+ int b;
+ char c;
+ char d;
+
+ int main(int a, char s) {
+    break;
+ }
