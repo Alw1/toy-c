@@ -10,7 +10,6 @@ public class HelloWorld {
 
         while(1==1){
 
-
         }
     }
 
@@ -19,9 +18,6 @@ public class HelloWorld {
         //a += 1;
 
     }
-
-
-
 }
 
 

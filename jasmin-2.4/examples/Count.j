@@ -4,7 +4,7 @@
 ; Purpose:   Counts from 0 to 9, printing out the value
 ; -------------------------------------------------------------------------
 
-.class public examples/Count
+.class public examples/CountShit
 .super java/lang/Object
 
 ;

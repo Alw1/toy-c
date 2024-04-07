@@ -1,6 +1,0 @@
-int main(){
-    int a; int v; char c;
-    read(a);
-    should = a + -5 / 70E-7;
-    write(a); 
-}

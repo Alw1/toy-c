@@ -15,6 +15,8 @@
 #include "../include/ASdefinitions.h"
 #include "../include/ASstatements.h"
 #include "../include/CGSymbols.h" 
+#include "../include/CGJasmin.h"
+
 
 SymTable global_st; //Global Symbol Table (Initialized in the Program() prod)
 

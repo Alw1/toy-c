@@ -1,9 +1,0 @@
-
-int main(){
-
-    int a; int v; char c;
-
-    read(a);
-should;
-    write(a);
-}
