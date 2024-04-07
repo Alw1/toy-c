@@ -5,25 +5,30 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "../include/CGSymbols.h"
+#include "../include/TCSymbols.h"
 
 #define MAX_SYMS 1000
 #define SYM_LEN 100
 
 struct symbol_t{
-    int offset;
     sym_type type;
     char *id;
 };
+
+/*
+
+Add the symbol if its a definition (var or func),
+call find symbol if the label is elsewhere
+
+*/
 
 struct sym_table_t{
     Symbol arr[MAX_SYMS];
     int size;
 };
 
-Symbol createSymbol(int offset, sym_type type, char * id){
+Symbol createSymbol(sym_type type, char *id){
     Symbol s = malloc(sizeof(struct symbol_t));
-    s->offset = offset;
     s->type = type;
     s->id = malloc(SYM_LEN);
     strcpy(s->id,id);
@@ -37,11 +42,38 @@ SymTable createSymTable(){
     return st;
 }
 
+void printSymTable(SymTable st){
+    for(int x=0;x<st->size;x++){
+        printSymbol(st->arr[x]);
+    }
+}
+
+void printSymbol(Symbol s){
+    switch(s->type){
+        case VAR:
+            printf("[SYMBOL] <VAR> %s\n", s->id);
+            break;
+        case FUNC:
+            printf("[SYMBOL] <FUNC> %s\n", s->id);
+            break;
+        default:
+            printf("INVALID SYMBOL TYPE");
+            exit(0);
+    }
+}
+
+
 void addSymbol(SymTable st, Symbol s){
     if(st->size == MAX_SYMS){
         printf("ERROR: SYMBOL TABLE OVERFLOW\n");
         exit(0);
     }
+
+    if(findSymbol(st,s->id)){
+        printf("ERROR: symbol already defined %s\n",s->id);
+        exit(0);
+    }
+
     st->arr[st->size++] = s;
 }
 
@@ -56,10 +88,10 @@ Symbol getSymbol(SymTable st,int index){
     return st->arr[index-1];
 }
 
-int findSymbol(SymTable st, char *id){
-    for(int x=0;x<MAX_SYMS;x++){
+bool findSymbol(SymTable st, char *id){
+    for(int x=0;x<st->size;x++){
         if(strcmp(st->arr[x]->id,id) == 0)
-            return 0;
+            return true;
     }
-    return 1; // false
+    return false;
 }

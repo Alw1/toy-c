@@ -63,6 +63,6 @@ void printToken(Token s);
 char *printTokenName(Token);
 int getTokenType(Token);
 char* getLexeme(tokens_t);
-
+char* toString_ID(Token t);
 
 #endif

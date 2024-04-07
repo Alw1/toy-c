@@ -6,15 +6,16 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
+#include <stdbool.h>
 #include "../include/TCscanner.h"
 #include "../include/TCtokens.h"
 #include "../include/TCparser.h"
+#include "../include/TCSymbols.h" 
 #include "../include/TCglobals.h"
 #include "../include/ASprogram.h"
 #include "../include/ASexpressions.h"
 #include "../include/ASdefinitions.h"
 #include "../include/ASstatements.h"
-#include "../include/CGSymbols.h" 
 #include "../include/CGJasmin.h"
 
 
@@ -30,6 +31,15 @@ void throwParseError(Scanner s,char *error_type, char *message){
     printf("^ '%s' expected\n",message);
     exit(0);
 }
+
+// void throwSemanticError(Symbol s){
+//     printf("\nERROR: %s is undefined\n", s->id);
+//     printf("%d: %s",s->line_num,s->curr_line);
+    
+//     for(int x=0;x<s->line_pos+2;x++)
+//         printf(" ");
+//     exit(0);
+// }
 
 void load_sym(Scanner s){ 
   if(debug_scanner || verbose)
@@ -62,11 +72,11 @@ ProgramST Program(Scanner s){
     
     ProgramST program = createProgramST();
     while(getTokenType(s->curr_token) != ENDFILE){
-      DefinitionST def = Definition(s);
-     // addSymbol(createSymbol(0, def-)) //All Symbols made here are global, function symbols should be made in the Function prod
-      addDefinition(program,def);
+      addDefinition(program,Definition(s));
     }
     
+
+    printSymTable(global_st);
     match(ENDFILE, s);
     exiting("Program");
     return program;
@@ -82,10 +92,17 @@ DefinitionST Definition(Scanner s){
     if(getTokenType(s->curr_token) == SEMICOLON)
     {
       match(SEMICOLON,s);
+      addSymbol(global_st,createSymbol(VAR,toString_ID(id)));
       def = createDefinitionST(VarDef,createVarDefST(type, id));
     } 
-    else 
-      def = createDefinitionST(FuncDef,FunctionDefinition(s,type,id));
+    else {
+      addSymbol(global_st,createSymbol(FUNC,toString_ID(id)));
+      FuncDefST f = FunctionDefinition(s,type,id); //BROKEN FIX LATER
+      def = createDefinitionST(FuncDef,f);
+      printf("\nFunc Table\n");
+      printFuncSymTable(f);
+      printf("\n");
+    }
     
     
     exiting("Definition");
@@ -105,9 +122,6 @@ Token Type(Scanner s){
 }
 
 FuncDefST FunctionDefinition(Scanner s, Token id, Token type){
-
-    //Create function symbol tables for local scope here
-    
     entering("FunctionDefinition");
     FuncDefST def = createFuncDefST(id, type);
     FunctionHeader(s,def);
@@ -159,12 +173,15 @@ BlockStateST CompoundStatement(Scanner s){
       if(getTokenType(s->curr_token) == INT){
         Token type = s->curr_token; match(INT, s);
         Token id = s->curr_token; match(ID, s);
+       addSymbol(global_st,createSymbol(VAR,toString_ID(id)));
         addBlockStateVarDefST(block_state, createVarDefST(type,id));
         match(SEMICOLON, s);
       }
       else if(getTokenType(s->curr_token) == CHAR){
         Token type = s->curr_token; match(CHAR, s);
         Token id = s->curr_token; match(ID, s);
+
+        addSymbol(global_st,createSymbol(FUNC,toString_ID(id)));
         addBlockStateVarDefST(block_state, createVarDefST(type,id));
         match(SEMICOLON, s);
       }
@@ -192,7 +209,13 @@ StatementST Statement(Scanner s){
     case READ: match(READ,s); statement = createStatementST(READ_STATE,ReadStatement(s)); break;
     case WRITE: match(WRITE,s); statement = createStatementST(WRITE_STATE,WriteStatement(s)); break;
     case LCURLY: statement = createStatementST(BLOCK_STATE,CompoundStatement(s)); break;
-    case LPAREN: case ID: case NUMBER: case STRING: case CHARLITERAL: case NOT:
+    case ID: 
+        if(!findSymbol(global_st,toString_ID(s->curr_token)))
+        {
+            printf("ERROR: SYMBOL USED BEFORE DECLARATION %s\n", toString_ID(s->curr_token));
+            exit(0);
+        }
+     case LPAREN: case NUMBER: case STRING: case CHARLITERAL: case NOT:
     statement = createStatementST(EXPR_STATE,ExpressionStatement(s)); break;
     default:
       if(strcmp(s->curr_token->lexeme,"-") == 0){
@@ -322,6 +345,12 @@ ExpressionST Primary(Scanner s){
   IdST temp_id = NULL;
   switch(getTokenType(s->curr_token)){
     case ID: 
+
+        if(!findSymbol(global_st,toString_ID(s->curr_token)))
+        {
+            printf("ERROR: SYMBOL USED BEFORE DECLARATION %s\n", toString_ID(s->curr_token));
+            exit(0);
+        }
         temp_id = createIdST(s->curr_token); match(ID,s); 
         if(getTokenType(s->curr_token) == LPAREN)
           expr = createExpressionST(FunctionCall(s,temp_id),FUNC_CALL_EXPR);

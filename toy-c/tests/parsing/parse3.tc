@@ -1,3 +1,6 @@
+int a; int b; int c; 
+char z;  char random;
+
 int main(int a, int b, char c, char d){
     char x;
 

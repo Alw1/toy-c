@@ -26,7 +26,7 @@ char *DefinitionST_ToString(DefinitionST ast);
 char *FuncDefST_ToString(FuncDefST ast);
 char *VarDefST_ToString(VarDefST ast);
 
-
+void printFuncSymTable(FuncDefST st);
 
 
 

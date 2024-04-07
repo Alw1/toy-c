@@ -1,8 +1,9 @@
- int a;
- int b;
- char c;
- char d;
+int a;
+int b;
+int c;
 
- int main(int a, char s) {
-    break;
- }
+int main(){
+   //int a;
+   char d;
+
+}

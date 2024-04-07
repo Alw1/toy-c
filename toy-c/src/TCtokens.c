@@ -65,3 +65,6 @@ char* getLexeme(tokens_t t){
     return tokenStr[t];
 }
 
+char* toString_ID(Token t){
+    return t->lexeme;
+}

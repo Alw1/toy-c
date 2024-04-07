@@ -21,10 +21,10 @@ void writeMethodHeader(FILE *f,char *label,char *params){
      fprintf(f,"\t.limit stack %d",MAX_STACK);     
 }
 
-void writeMethodReturn(FILE *f, ReturnStateST st){
-     //fprintf(f,"\treturn %s",label,params); 
-     fprintf(f,".end method");     
-}
+// void writeMethodReturn(FILE *f, ReturnStateST st){
+//      //fprintf(f,"\treturn %s",label,params); 
+//      fprintf(f,".end method");     
+// }
 
 // void generateJasminCode(ProgramST st){
 //     //Create FILE HERE

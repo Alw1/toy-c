@@ -11,6 +11,7 @@
 #include "../include/TCtokens.h"
 #include "../include/TCparser.h"
 #include "../include/TCglobals.h"
+#include "../include/TCSymbols.h" 
 #include "../include/ASprogram.h"
 #include "../include/ASexpressions.h"
 #include "../include/ASdefinitions.h"
@@ -25,6 +26,7 @@ struct DefinitionST_t {
 };
 
 struct FuncDefST_t {
+    SymTable sym_table;
     Token id;
     Token type;
     VarDefST vardef_tree[1000];
@@ -57,6 +59,7 @@ FuncDefST createFuncDefST(Token type, Token id){
     ast->type = type;
     ast->block_state = NULL;
     ast->vardef_index = 0;
+    ast->sym_table = createSymTable();
     return ast;
 }
 
@@ -114,9 +117,14 @@ char *VarDefST_ToString(VarDefST ast){;
 }
 
 void addBlockStateFuncDefST(FuncDefST ast, BlockStateST block){
-  ast->block_state = block;
+    ast->block_state = block;
 }
 
 void addFuncDefVarDefST(FuncDefST ast, VarDefST def){
+  addSymbol(ast->sym_table,createSymbol(VAR,toString_ID(def->id[0])));
   ast->vardef_tree[ast->vardef_index++] = def;
+}
+
+void printFuncSymTable(FuncDefST st){
+   printSymTable(st->sym_table);
 }
