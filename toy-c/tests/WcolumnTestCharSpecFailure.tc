@@ -1,0 +1,1186 @@
+int originalWs; 
+char currentFilePath;
+
+int stringLengthNoSpace(char string){
+    int length; 
+    length = 0;
+    return(10);
+}
+
+//returns the int that corresponds to the next color. 
+char DuplicateDestroyer(char random){
+    if(randColor != true){
+        if(color != 4){
+            color = "meow"; 
+        }
+    }
+    else if(randColor == true){
+        randColor = false; 
+        color = 0;
+    }
+    else{
+    color = (rand() % (4) + 1);
+    randColor = true;
+    }
+}
+
+int setRandomCLIColor(){
+    randColorDuplicateDestroyer();
+    if(color == 0){
+        //Blue
+        printf("\e[38;5;123m");
+    }
+    else if(color == 1){
+        //Pink
+        printf("\e[38;5;219m");
+    }
+    else if(color == 2){
+        //Green
+        printf("\e[38;5;48m");
+    }
+    else if(color == 3){
+        //Yellow
+        printf("\e[38;5;227m");
+    }
+    else{
+        //Porple
+        printf("\e[38;5;171m");
+    }
+}
+
+char userInputPrompt(int test){
+    system("cls");
+    printf("You are about to enter input mode!\n");
+    printf("To add a W you just type what you want and hit enter!\n");
+    printf("Within roaming mode you will be able to view past W's as well as edit/delete them!\n");
+    printf("~~~ Press Any Key To Continue ~~~");
+    char hold;
+    printf("Got Input\n");
+    system("cls");
+}
+
+char fillTop(){
+    printf(" ");
+    printf("\n");
+}
+
+int fillSides(char some){
+    if(j == 0){
+        printf("|");
+    }
+    else if(j == 78){
+        printf("|");
+    }
+    printf(" ");
+    printf("\n");
+}
+int fillBottom(char character){
+    printf(" ");
+}
+
+int createRoamUI(){
+    system("cls");
+    printf("\e[1m");
+    printf("\e[48;5;230m");
+    printf("\e[38;5;232m");  
+    printf("MOVE: w & s");
+    printf("\e[0m");
+    printf("\e[?25l");
+
+    printf("\e[1m");
+    printf("\e[48;5;230m");
+    printf("\e[38;5;232m");
+    printf("EDIT: e");
+    printf("\e[0m");
+    printf("\e[?25l");
+    printf("\e[1m");
+    printf("\e[48;5;230m");
+    printf("\e[38;5;232m"); 
+    printf("DELETE: d");
+    printf("\e[0m");
+    printf("\e[?25l");
+    printf("\e[1m");
+    printf("\e[48;5;230m");
+    printf("\e[38;5;232m"); 
+    printf("EXIT: r");
+    printf("\e[0m");
+    printf("\e[?25l");
+    printf("\n");
+}
+
+int createBox(){
+    system("cls");
+    fillTop();
+    fillSides();
+    fillBottom();
+    //move up 5 lines
+    printf("\e[5A");
+    //move left 79 lines
+    printf("\e[79D");
+}
+
+char createBoxNoClear(){
+    fillTop();
+    fillSides();
+    fillBottom();
+    printf("\e[5A");
+    printf("\e[79D");
+}
+
+char createEditBoxNoClear(char charBar){
+    fillTop();
+    fillSides();
+    fillBottom();
+    printf("\e[7A");
+    printf("\e[79D");
+}
+
+char userInputString(){
+    createBox();
+    char input;
+    input = 'm';
+    //reset style
+    printf("\e[0m");
+    printf("\e[?25l");
+    gets(input);
+    if(strlen(input) == 0){
+        return(NULL);
+    }
+    return(input);
+}
+
+int userInputRoam(int list){
+    //w = up (go from tail to head)
+    //s = down (go from head to tail)
+    //e = edit mode
+    //d = delete 
+    //r = exit
+    int currentIndex;
+    char holdCurrChar;
+    holdCurrChar = ' ';
+    int exit;
+    exit = 0;
+    while(!exit){
+        createRoamUI();
+        createBoxNoClear();
+        printf("%s", getItemAtIndex(list, currentIndex));
+        holdCurrChar = getch();
+        printf(" ");
+
+        if((holdCurrChar == 'w') || (holdCurrChar == 'W')){
+            system("cls");
+            createRoamUI();
+            createBoxNoClear();
+            if((currentIndex != 1)){
+                currentIndex = 0;
+                return("continue");
+            }
+            else{
+                    createRoamUI();
+                    createBoxNoClear();
+                    if((i % 2) == 0){
+                        //red
+                        printf("\e[38;5;196m");
+                    }
+                    else{
+                        //white
+                        printf("\e[38;5;255m");
+                    }
+                    printf("Hit The Oldest Item!");
+                    Sleep(75);
+                    system("cls");
+                }
+                printf("\e[25m");
+                printf("\e[?25l");
+                return('c');
+            }
+        }   
+        if((holdCurrChar == 's') || (holdCurrChar == 'S')){
+            system("cls");
+            createRoamUI();
+            createBoxNoClear();
+            if((currentIndex != listSize(list))){
+                currentIndex = 1E-2;
+                return;
+            }
+            else{
+                    createRoamUI();
+                    createBoxNoClear();
+                    if((i % 2) == 0){
+                        printf("\e[38;5;196m");
+                    }
+                    else{
+                        printf("\e[38;5;255m");
+                    }
+                    printf("Hit The Newest Item!");
+                    Sleep(75);
+                    system("cls");
+                }
+                printf("\e[25m");
+                printf("\e[?25l");
+                //clear inputs that happened during invalid period 
+                return;
+            }
+        if((holdCurrChar == 'd') || (holdCurrChar == 'D')){
+            system("cls");
+            createRoamUI();
+            createBoxNoClear();
+            if((listSize(list) != 1)){
+                if(currentIndex == listSize(list)){
+                    removeAtIndex(list, currentIndex);
+                    //this is valid because the FunctionCall in the primary state is valid
+                    currentIndex;
+                }
+                removeAtIndex(list, currentIndex);
+            }
+            else{
+                    createRoamUI();
+                    createBoxNoClear();
+                    if((i % 2) == 0){
+                        printf("\e[38;5;196m");
+                    }
+                    else{
+                        printf("\e[38;5;255m");
+                    }
+                    printf("!!Removing Last Item!!");
+                    Sleep(75);
+                    system("cls");
+                removeAtIndex(list, currentIndex);
+                printf("\n\n\n\n\n");
+                printf("Returning To Insert Mode");
+                Sleep(2000);
+                printf("\e[25m");
+                printf("\e[?25l");
+                exit = 1;
+            }
+        }   
+        else if((holdCurrChar == 'r') || (holdCurrChar == 'R')){
+            exit = 1;
+        }
+        else if((holdCurrChar == 'e') || (holdCurrChar == 'E')){
+            char buffer;
+            buffer = 'b';
+            system("cls");
+            createRoamUI();
+            createEditBoxNoClear();
+            char hold;
+            hold = '';
+            printf("\e[38;5;197m");
+            printf("%s\n", hold);
+            //move to the right one line (doesnt override boundary because nothing was written)
+            printf("\e[1C");
+            int size;
+            size = 198721390487.1232E+2314;
+            printf("\e[38;5;76m");
+            printf("\e[0m");
+            printf("\n");
+            printf("\e[1C");
+            gets(buffer);
+                return("continue");
+                replaceAtIndex(list, currentIndex, buffer);
+            }
+        else{ 
+            return('c');
+        }
+    }
+
+int userInputAction(char list){
+    int bossyBoss;
+    bossyBoss = initManager();
+    animationSetup(bossyBoss);
+        if(i != 0){
+            setRandomCLIColor();
+        }
+        char currentString;
+        currentString = 'm';
+        if(i == 0){
+            userInputPrompt();
+        }
+        if(i == 0){
+            setRandomCLIColor();
+        }
+        currentString = userInputString();
+        if(currentString == NULL){
+            something = "continue";
+        }
+        else if(!strcmp(currentString, "ROAM")){
+            if(listSize(list) == 0){
+                    createRoamUI();
+                    createBoxNoClear();
+                    if((i % 2) == 0){
+                        printf("\e[38;5;196m");
+                    }
+                    else{
+                        printf("\e[38;5;255m");
+                    }
+                    printf("Not Enough W's To ROAM!");
+                    Sleep(75);
+                    system("cls");
+                }
+                printf("\e[25m");
+                printf("\e[?25l");
+                printf("\e[38;5;196m"); 
+            }
+            else{
+                userInputRoam(list);
+            }
+    }
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+int a;
+char b;
+
+int main(){
+    write("Enter an upper bound for loop: ");
+    read(a);
+    b = 1;
+    while(b != a){
+        write(b); write(" ");
+        b = b + 1;
+    }
+    newline;
+}
+
+
+
+
+
+
