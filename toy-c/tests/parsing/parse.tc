@@ -2,12 +2,12 @@ int a;
 int b;
 int c;
 
-int main(){
+int main(int z){
    int a;
-   //char d;
+   a = 0;
    int x;
    int y;
-   //int z;
+   x = 0;
 }
 
 int x(){

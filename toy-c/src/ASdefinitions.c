@@ -1,5 +1,5 @@
 /*
-    Created by Alex Wyatt Spring 2023
+    Created by Alex Wyatt Spring 2024
 */
 
 #include <stdio.h>
@@ -35,8 +35,7 @@ struct FuncDefST_t {
 };
 
 struct VarDefST_t {
-    Token id[1000];
-    int id_index;
+    Token id;
     Token type;
 };
 
@@ -65,8 +64,7 @@ FuncDefST createFuncDefST(Token type, Token id){
 
 VarDefST createVarDefST(Token type, Token id){
     VarDefST ast = malloc(sizeof(struct VarDefST_t));
-    ast->id_index = 0;
-    ast->id[ast->id_index++] = id;
+    ast->id = id;
     ast->type = type;
 
     return ast; 
@@ -108,9 +106,9 @@ char *VarDefST_ToString(VarDefST ast){;
   strcpy(s,"varDef(\n");
   indent(); indent(); strcat(s,spaces());
   strcat(s,"Type("); strcat(s, ast->type->lexeme); strcat(s,")\n");
-  for(int x=0;x<ast->id_index;x++){
-   strcat(s,spaces()); strcat(s,"ID("); strcat(s, ast->id[x]->lexeme); strcat(s,")\n");
-  }
+  //for(int x=0;x<ast->id_index;x++){
+  strcat(s,spaces()); strcat(s,"ID("); strcat(s, ast->id->lexeme); strcat(s,")\n");
+  
   outdent(); outdent(); strcat(s,spaces());
   strcat(s,")\n");
   return s;
@@ -123,14 +121,16 @@ void addBlockStateFuncDefST(FuncDefST ast, BlockStateST block){
 }
 
 void addFuncDefVarDefST(FuncDefST ast, VarDefST def){
-//addSymbol(ast->sym_table,createSymbol(VAR,toString_ID(def->id[0])));
+  addSymbol(ast->sym_table,createSymbol(VAR,getVarDef_ID(def)));
   ast->vardef_tree[ast->vardef_index++] = def;
 }
 
 void printFuncSymTable(FuncDefST st){
+   printf("\n%s Symbol Table\n",st->id->lexeme);
    printSymTable(st->sym_table);
+   printf("\n");
 }
 
 char *getVarDef_ID(VarDefST st){
-    return toString_ID(st->id[0]);
+    return toString_ID(st->id);
 }

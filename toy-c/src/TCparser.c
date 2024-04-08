@@ -1,5 +1,5 @@
 /*
-    Created by Alex Wyatt Spring 2023
+    Created by Alex Wyatt Spring 2024
 */
 
 #include <stdio.h>
@@ -97,11 +97,13 @@ DefinitionST Definition(Scanner s){
     } 
     else {
       addSymbol(global_st,createSymbol(FUNC,toString_ID(id)));
-      FuncDefST f = FunctionDefinition(s,type,id); //BROKEN FIX LATER
+      FuncDefST f = FunctionDefinition(s,type,id);
       def = createDefinitionST(FuncDef,f);
-      printf("\nFunc Table\n");
+
+      //Check declaration semantics here (Traverse function tree)
+      //defSemanticCheck(f);
+
       printFuncSymTable(f);
-      printf("\n");
     }
 
     exiting("Definition");
@@ -147,6 +149,7 @@ void FormalParamList(Scanner s, FuncDefST def){
     if(getTokenType(s->curr_token) != RPAREN){
        type = Type(s);
        id = s->curr_token; match(ID,s);
+     // addFuncSymbols(def, createSymbol(VAR, toString_ID(id)));
       addFuncDefVarDefST(def,createVarDefST(type,id));
     }
     if(getTokenType(s->curr_token) == COMMA){
@@ -208,12 +211,12 @@ StatementST Statement(Scanner s){
     case WRITE: match(WRITE,s); statement = createStatementST(WRITE_STATE,WriteStatement(s)); break;
     case LCURLY: statement = createStatementST(BLOCK_STATE,CompoundStatement(s)); break;
     case ID: 
-        if(!findSymbol(global_st,toString_ID(s->curr_token)))
-        {
-            printf("ERROR: SYMBOL USED BEFORE DECLARATION %s\n", toString_ID(s->curr_token));
-            exit(0);
-        }
-     case LPAREN: case NUMBER: case STRING: case CHARLITERAL: case NOT:
+        // if(!findSymbol(global_st,toString_ID(s->curr_token)))
+        // {
+        //     printf("ERROR: SYMBOL USED BEFORE DECLARATION %s\n", toString_ID(s->curr_token));
+        //     exit(0);
+        // }
+    case LPAREN: case NUMBER: case STRING: case CHARLITERAL: case NOT:
     statement = createStatementST(EXPR_STATE,ExpressionStatement(s)); break;
     default:
       if(strcmp(s->curr_token->lexeme,"-") == 0){
@@ -343,12 +346,12 @@ ExpressionST Primary(Scanner s){
   IdST temp_id = NULL;
   switch(getTokenType(s->curr_token)){
     case ID: 
-
-        if(!findSymbol(global_st,toString_ID(s->curr_token)))
-        {
-            printf("ERROR: SYMBOL USED BEFORE DECLARATION %s\n", toString_ID(s->curr_token));
-            exit(0);
-        }
+        //Needs to be in function ST
+        // if(!findSymbol(global_st,toString_ID(s->curr_token)))
+        // {
+        //     printf("ERROR: SYMBOL USED BEFORE DECLARATION %s\n", toString_ID(s->curr_token));
+        //     exit(0);
+        // }
         temp_id = createIdST(s->curr_token); match(ID,s); 
         if(getTokenType(s->curr_token) == LPAREN)
           expr = createExpressionST(FunctionCall(s,temp_id),FUNC_CALL_EXPR);

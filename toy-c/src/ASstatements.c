@@ -1,5 +1,5 @@
 /*
-    Created by Alex Wyatt Spring 2023
+    Created by Alex Wyatt Spring 2024
 */
 
 #include <stdio.h>
@@ -319,8 +319,7 @@ void addBlockStateStatementST(BlockStateST ast, StatementST statement){
 }
 
 void addFuncSymbols(SymTable st, BlockStateST ast){
-  for(int x=0;x<ast->vardef_index;x++)
-  {
+  for(int x=0;x<ast->vardef_index;x++){
       addSymbol(st, createSymbol(VAR,getVarDef_ID(ast->vardef_tree[x])));
   }
 }

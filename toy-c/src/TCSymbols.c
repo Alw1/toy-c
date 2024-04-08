@@ -1,5 +1,5 @@
 /*
-    Created by Alex Wyatt Spring 2023
+    Created by Alex Wyatt Spring 2024
 */
 
 #include <stdlib.h>
@@ -15,13 +15,6 @@ struct symbol_t{
     char *id;
 };
 
-/*
-
-Add the symbol if its a definition (var or func),
-call find symbol if the label is elsewhere
-
-*/
-
 struct sym_table_t{
     Symbol arr[MAX_SYMS];
     int size;
@@ -32,7 +25,6 @@ Symbol createSymbol(sym_type type, char *id){
     s->type = type;
     s->id = malloc(SYM_LEN);
     strcpy(s->id,id);
-
     return s;
 }
 
@@ -99,3 +91,4 @@ bool findSymbol(SymTable st, char *id){
     }
     return false;
 }
+
