@@ -139,7 +139,7 @@ char *getVarDef_ID(VarDefST st){
 }
 
 void checkFuncDefSemantics(FuncDefST ast){
-
+  //printf("OJI\n");
     for(int x=0;x<ast->vardef_index;x++)
       addSymbol(ast->sym_table,createSymbol(VAR,getVarDef_ID(ast->vardef_tree[x])));
 
@@ -165,13 +165,11 @@ char *generateVarDefCode(VarDefST st){
 
 char *generateFuncDefCode(FuncDefST st){
     checkFuncDefSemantics(st);
-
     
     for(int x=0;x<st->vardef_index;x++)
       generateVarDefCode(st->vardef_tree[x]);
 
     generateBlockSTCode(st, st->block_state);
     
-
     return "NOTHING YET";
 }

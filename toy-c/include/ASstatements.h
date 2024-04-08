@@ -59,12 +59,14 @@ enum statement_prod getType(StatementST);
 void addElseStateST(IfStateST, StatementST);
 void addReturnExpressionST(ReturnStateST, ExpressionST);
 void addReadStateIDST(ReadStateST, Token);
-
-void addWriteStateExpressionST(WriteStateST, ExpressionST);
-
 void addBlockStateVarDefST(BlockStateST, VarDefST);
 void addBlockStateStatementST(BlockStateST, StatementST);
+void addWriteStateExpressionST(WriteStateST, ExpressionST);
+void addElseStateST(IfStateST, StatementST);
+void addReturnExpressionST(ReturnStateST, ExpressionST);
+void addReadStateIDST(ReadStateST, Token);
 
+//For Function Symbol tables 
 void addFuncSymbols(SymTable st, BlockStateST ast);
 
 //Code Generation Functions
@@ -79,14 +81,14 @@ char *generateWriteSTCode(FuncDefST func_st, WriteStateST ast);
 char *generateNewlineSTCode(FuncDefST func_st, NewlineStateST ast);
 
 //Semantic Check Functions
-void checkBlockSTSemantics(BlockStateST ast);
-void checkBreakSTSemantics(BreakStateST ast); 
-void checkIFSTSemantics(IfStateST ast);
-void checkNullSTSemantics(NullStateST ast);
+void checkBlockSTSemantics(FuncDefST func_st, BlockStateST ast);
+void checkBreakSTSemantics(FuncDefST func_st, BreakStateST ast); 
+void checkIFSTSemantics(FuncDefST func_st, IfStateST ast);
+void checkNullSTSemantics(FuncDefST func_st, NullStateST ast);
 void checkReturnSTSemantics(FuncDefST func_st, ReturnStateST ast); //Return type must match func type
-void checkWhileSTSemantics(WhileStateST ast);
-void checkReadSTSemantics(ReadStateST ast);
-void checkWriteSTSemantics(WriteStateST ast);
-void checkNewlineSTSemantics(NewlineStateST ast);
+void checkWhileSTSemantics(FuncDefST func_st, WhileStateST ast);
+void checkReadSTSemantics(FuncDefST func_st, ReadStateST ast);
+void checkWriteSTSemantics(FuncDefST func_st, WriteStateST ast);
+void checkNewlineSTSemantics(FuncDefST func_st, NewlineStateST ast);
 
 #endif

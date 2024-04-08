@@ -17,6 +17,7 @@ ProgramST createProgramST(void);
 void addDefinition(ProgramST, DefinitionST);
 char *ProgramST_ToString(ProgramST);
 
+//Code Generation Function 
 char *generateProgramCode(ProgramST st);
 
 #endif

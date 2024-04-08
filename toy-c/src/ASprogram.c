@@ -46,7 +46,7 @@ void addDefinition(ProgramST ast, DefinitionST def){
 }
 
 char *generateProgramCode(ProgramST st){
-    for(int x=0;x<st->def_tree;x++)
+    for(int x=0;x<st->index;x++)
       generateDefinitionCode(st->def_tree[x]);
 
     return "NOTHING YET";

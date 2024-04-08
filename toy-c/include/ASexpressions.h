@@ -48,4 +48,30 @@ char *OperatorST_ToString(OperatorST);
 
 void addFuncCallExpressionST(FuncCallST, ExpressionST);
 
+
+//Semantic Check Functions
+void checkExpressionSTSemantics(ExpressionST ast);
+void checkExprStSemantics(ExprST ast);
+void checkNotSTSemantics(NotST ast);
+void checkMinusSTSemantics(MinusST ast);
+void checkNumberSTSemantics(NumberST ast);
+void checkIdSTSemantics(IdST ast);
+void checkCharSTSemantics(CharST ast);
+void checkStringSTSemantics(StringST ast);
+void checkFuncCallSTSemantics(FuncCallST ast);
+void checkOperatorSTSemantics(OperatorST ast);
+
+
+//Code Generation Functions
+char *generateExpressionSTcode(ExpressionST ast);
+char *generateExprSTcode(ExprST ast);
+char *generateNotSTcode(NotST ast);
+char *generateMinusSTcode(MinusST ast);
+char *generateNumberSTcode(NumberST ast);
+char *generateIdSTcode(IdST ast);
+char *generateCharSTcode(CharST ast);
+char *generateStringSTcode(StringST ast);
+char *generateFuncCallSTcode(FuncCallST ast);
+char *generateOperatorSTcode(OperatorST ast);
+
 #endif

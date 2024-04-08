@@ -10,6 +10,7 @@
 #include "../include/TCtokens.h"
 #include "../include/TCparser.h"
 #include "../include/TCglobals.h"
+#include "../include/CGJasmin.h"
 
 //Global Variables
 int debug_scanner = 0; 
