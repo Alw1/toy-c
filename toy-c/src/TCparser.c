@@ -75,8 +75,11 @@ ProgramST Program(Scanner s){
       addDefinition(program,Definition(s));
     }
     
-    printf("Global Sym Table\n");
-    printSymTable(global_st);
+    if(debug_symbol){
+      printf("Global Sym Table\n");
+      printSymTable(global_st);
+    }
+
     match(ENDFILE, s);
     exiting("Program");
     return program;
@@ -100,10 +103,8 @@ DefinitionST Definition(Scanner s){
       FuncDefST f = FunctionDefinition(s,type,id);
       def = createDefinitionST(FuncDef,f);
 
-      //Check declaration semantics here (Traverse function tree)
-      //defSemanticCheck(f);
-
-      printFuncSymTable(f);
+      if(debug_symbol)
+        printFuncSymTable(f);
     }
 
     exiting("Definition");
@@ -124,7 +125,7 @@ Token Type(Scanner s){
 
 FuncDefST FunctionDefinition(Scanner s, Token id, Token type){
     entering("FunctionDefinition");
-    FuncDefST def = createFuncDefST(id, type);
+    FuncDefST def = createFuncDefST(id, type,global_st);
     FunctionHeader(s,def);
     FunctionBody(s,def);
     exiting("FunctionDefinition");

@@ -3,11 +3,11 @@ int b;
 int c;
 
 int main(int z){
-   int a;
-   a = 0;
+   //int a;
+   a=0;
+   int b;
    int x;
    int y;
-   x = 0;
 }
 
 int x(){

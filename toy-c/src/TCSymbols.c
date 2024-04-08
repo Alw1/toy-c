@@ -64,8 +64,10 @@ void addSymbol(SymTable st, Symbol s){
         switch(s->type){
             case VAR:
                 printf("Error: Variable %s already defined\n",s->id);
+                break;
             case FUNC:
                 printf("Error: Function %s already defined\n",s->id);
+                break;
             default:
                 exit(0);
         }

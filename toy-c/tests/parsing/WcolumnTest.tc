@@ -618,11 +618,6 @@ int dumpWs(char dl,int fp){
 }
 
 
-
-
-
-
-    
 int main(){
     originalWs = 0;
     //ensures that escape codes work properly regardless of what program runs before it 

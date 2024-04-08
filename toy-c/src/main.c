@@ -46,7 +46,9 @@ int main(int argc, char *argv[]){
 
     Scanner scanner = createScanner(source_file);
     ProgramST program_ast = Program(scanner);  
-    //generateJasminCode(program_ast);
+
+    if(debug_code_gen)
+        generateJasminCode(program_ast);
 
     if(debug_scanner)
         printf("[SCANNER] total tokens: %d\n", scanner->token_tot-1);
@@ -100,6 +102,8 @@ void parseArguments(int argc, char* argv[]){
             verbose = 1;
         else if(strcmp(argv[x],"-abstract") == 0)
             debug_abstract = 1;
+        else if(strcmp(argv[x],"-code") == 0)
+            debug_code_gen = 1;
         else if(strcmp(argv[x],"-class") == 0){
             if(x+1 == argc){
                 printf("ERROR: -class <filename>\n");

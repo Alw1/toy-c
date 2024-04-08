@@ -44,3 +44,11 @@ char *ProgramST_ToString(ProgramST ast) {
 void addDefinition(ProgramST ast, DefinitionST def){
      ast->def_tree[ast->index++] = def;
 }
+
+char *generateProgramCode(ProgramST st){
+    for(int x=0;x<st->def_tree;x++)
+      generateDefinitionCode(st->def_tree[x]);
+
+    return "NOTHING YET";
+}
+

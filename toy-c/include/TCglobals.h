@@ -18,4 +18,7 @@ extern char source_filename[100];
 extern char output_filename[100];
 extern char class_filename[100];
 
+
+//Maybe make the symbol table a global here?
+//extern FILE *jasmin_output;
 #endif

@@ -319,7 +319,54 @@ void addBlockStateStatementST(BlockStateST ast, StatementST statement){
 }
 
 void addFuncSymbols(SymTable st, BlockStateST ast){
-  for(int x=0;x<ast->vardef_index;x++){
+  for(int x=0;x<ast->vardef_index;x++)
       addSymbol(st, createSymbol(VAR,getVarDef_ID(ast->vardef_tree[x])));
-  }
+  
+  //addStatementsymbols here
+  // for(int x=0;x<ast->statement_index;x++){
+  //   switch(ast->statement_tree[x]->type) {
+  //     case EXPR_STATE: return ExpressionStateST_ToString(ast->expr_tree); 
+  //     case B1REAK_STATE:  return BreakStateST_ToString(ast->break_tree); 
+  //     case BLOCK_STATE:  return BlockStateST_ToString(ast->block_tree); 
+  //     case IF_STATE: return  IfStateST_ToString(ast->if_tree);
+  //     case NULL_STATE:  return NullStateST_ToString(ast->null_tree);
+  //     case RETURN_STATE: return ReturnStateST_ToString(ast->return_tree);
+  //     case WHILE_STATE: return WhileStateST_ToString(ast->while_tree);
+  //     case READ_STATE: return ReadStateST_ToString(ast->read_tree);
+  //     case WRITE_STATE: return WriteStateST_ToString(ast->write_tree);
+  //     case NEWLINE_STATE: return NewlineStateST_ToString(ast->newline_tree);
+  //   default:
+  //     printf("INTERNAL ERROR IN StatementST_ToString()\n");
+  //     exit(EXIT_FAILURE);
+  //   }
+  // }
+  //   addStatementSymbol(SymTable st, StatementST ast->statement_tree[x]);
+}
+
+
+// void checkBlockStateSemantics(BlockStateST ast){
+//   for(int x=0;x<ast->statement_index;x++){
+//     switch(ast->statement_tree[x]->type) {
+//       case EXPR_STATE: return checkExpressionSTSemantics(ast->expr_tree); 
+//       case BREAK_STATE:  return checkBreakStateSTSemantics(ast->break_tree); 
+//       case BLOCK_STATE:  return checkBlockSTSemantics(ast->block_tree); 
+//       case IF_STATE: return  checkIFSTSemantics(ast->if_tree);
+//       case NULL_STATE:  return checkNullSTSemantics(ast->null_tree);
+//       case RETURN_STATE: return checkReturnSTSemantics(ast->return_tree);
+//       case WHILE_STATE: return checkWhileSTSemantics(ast->while_tree);
+//       case READ_STATE: return checkReadSTSemantics(ast->read_tree);
+//       case WRITE_STATE: return checkWriteSTSemantics(ast->write_tree);
+//       case NEWLINE_STATE: return checkNewlineSTSemantics(ast->newline_tree);
+//     default:
+//       printf("INTERNAL ERROR IN checkBlockSTSemantics()\n");
+//       exit(EXIT_FAILURE);
+//     }
+//   }
+//    // addStatementSymbol(SymTable st, StatementST ast->statement_tree[x]);
+// }
+
+char *generateBlockSTCode(FuncDefST func_st, BlockStateST st){
+   // checkBlockStateSemantics(st);
+    printf("ENDING IN GENERATE blockstate\n");
+    exit(0);
 }

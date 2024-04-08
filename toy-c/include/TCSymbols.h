@@ -6,7 +6,6 @@
 
 typedef enum {VAR, FUNC, ASSIGNMENT, NO_TYPE} sym_type;
 
-
 typedef struct symbol_t *Symbol;
 typedef struct sym_table_t *SymTable;
 

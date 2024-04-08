@@ -9,13 +9,20 @@
 #define MAX_LOCALS 4
 #define MAX_STACK  3
 
-void writesJasmineDirectives(FILE *f,char *source_name,char *output_name){
+/*
+    Most code for generating code is contained in 
+    the corresponding absract syntax files, with functions
+    provided to generate code for each specific syntax tree
+*/
+
+
+void generateJasminDirectives(FILE *f,char *source_name,char *output_name){
     fprintf(f,".source %s\n",source_name); 
     fprintf(f,".class  public %s\n",output_name); 
     fprintf(f,".super  java/lang/Object\n");       
 }
 
-void writeMethodHeader(FILE *f,char *label,char *params){
+void generateMethodHeader(FILE *f,char *label,char *params){
      fprintf(f,".method public static %s(%s)V\n",label,params); 
      fprintf(f,"\t.limit locals %d",MAX_LOCALS);     
      fprintf(f,"\t.limit stack %d",MAX_STACK);     
@@ -26,11 +33,12 @@ void writeMethodHeader(FILE *f,char *label,char *params){
 //      fprintf(f,".end method");     
 // }
 
-// void generateJasminCode(ProgramST st){
-//     //Create FILE HERE
-//     FILE *output_file
-//     writeJasmineDirectives()
-// }
+void generateJasminCode(ProgramST st){
+    //Create FILE HERE
+    //FILE *output_file
+    //writeJasmineDirectives();
+    generateProgramCode(st);
+}
 
 void writeIntegerAssignment(FILE *f, int num, int frame){
     fprintf(f,"iconst_%d\n",num); 

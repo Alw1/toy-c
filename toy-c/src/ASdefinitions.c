@@ -27,6 +27,7 @@ struct DefinitionST_t {
 
 struct FuncDefST_t {
     SymTable sym_table;
+    SymTable global_st;
     Token id;
     Token type;
     VarDefST vardef_tree[1000];
@@ -52,13 +53,14 @@ DefinitionST createDefinitionST(enum definition_prods type, void *tree) {
   return ast;
 }
 
-FuncDefST createFuncDefST(Token type, Token id){
+FuncDefST createFuncDefST(Token type, Token id, SymTable global_st){
     FuncDefST ast = malloc(sizeof(struct FuncDefST_t));
     ast->id = id;
     ast->type = type;
     ast->block_state = NULL;
     ast->vardef_index = 0;
     ast->sym_table = createSymTable();
+    ast->global_st = global_st;
     return ast;
 }
 
@@ -87,6 +89,7 @@ char *DefinitionST_ToString(DefinitionST ast) {
 }
 
 char *FuncDefST_ToString(FuncDefST ast){
+
   char *s = malloc(1000); 
   strcpy(s,"funcDef(\n");
   indent(); indent(); indent();
@@ -121,16 +124,54 @@ void addBlockStateFuncDefST(FuncDefST ast, BlockStateST block){
 }
 
 void addFuncDefVarDefST(FuncDefST ast, VarDefST def){
-  addSymbol(ast->sym_table,createSymbol(VAR,getVarDef_ID(def)));
+  //addSymbol(ast->sym_table,createSymbol(VAR,getVarDef_ID(def)));
   ast->vardef_tree[ast->vardef_index++] = def;
 }
 
-void printFuncSymTable(FuncDefST st){
-   printf("\n%s Symbol Table\n",st->id->lexeme);
-   printSymTable(st->sym_table);
+void printFuncSymTable(FuncDefST ast){
+   printf("\n%s Symbol Table\n",ast->id->lexeme);
+   printSymTable(ast->sym_table);
    printf("\n");
 }
 
 char *getVarDef_ID(VarDefST st){
     return toString_ID(st->id);
+}
+
+void checkFuncDefSemantics(FuncDefST ast){
+
+    for(int x=0;x<ast->vardef_index;x++)
+      addSymbol(ast->sym_table,createSymbol(VAR,getVarDef_ID(ast->vardef_tree[x])));
+
+    //checkBlockStateSemantics(ast->sym_table, st->block_state);
+}
+
+// void checkVarDefSemantics(VarDefST st){
+//     addSymbol(ast->sym_table,createSymbol(VAR,getVarDef_ID(def)));    
+// }
+
+char *generateDefinitionCode(DefinitionST st){
+  switch(st->def_type){
+    case VarDef:
+      return generateVarDefCode(st->VarDef_tree);
+    case FuncDef:
+      return generateFuncDefCode(st->FuncDef_tree);
+  }
+}
+
+char *generateVarDefCode(VarDefST st){
+    return "NOTHING YET";
+}
+
+char *generateFuncDefCode(FuncDefST st){
+    checkFuncDefSemantics(st);
+
+    
+    for(int x=0;x<st->vardef_index;x++)
+      generateVarDefCode(st->vardef_tree[x]);
+
+    generateBlockSTCode(st, st->block_state);
+    
+
+    return "NOTHING YET";
 }
