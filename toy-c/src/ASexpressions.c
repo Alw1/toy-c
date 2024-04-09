@@ -274,9 +274,7 @@ void generateExpressionSTCode(FILE *f, FuncDefST func_st, ExpressionST ast){
         default:
         printf("INTERNAL ERROR IN ExpressionST_ToString()\n");
         exit(0);
-    }    
-
-   
+    }       
 }
 
 void generateNumberSTCode(FILE *f, FuncDefST func_st, NumberST ast){
@@ -291,10 +289,10 @@ void generateIdSTCode(FILE *f, FuncDefST func_st, IdST ast){
         exit(0);
     }
 
-    fprintf(f,"\tload some shit here later %d\n",offset);
+    fprintf(f,"\tiload_%d\n",offset);
 }
 void generateCharSTCode(FILE *f, FuncDefST func_st, CharST ast){
-    fprintf(f,"")
+    fprintf(f,"DO NOTHING YET\n\n");
 }
 
 void generateStringSTCode(FILE *f, FuncDefST func_st, StringST ast){
@@ -306,70 +304,84 @@ void generateFuncCallSTCode(FILE *f, FuncDefST func_st, FuncCallST ast){
 
 void generateExprSTCode(FILE *f, FuncDefST func_st, ExprST ast){
 
-    //Variable Assignment
-    if(ast->expr1->type == ID_EXPR && getTokenType(ast->op->op) == ASSIGNOP){
-       generateExpressionSTCode(f, func_st, ast->expr2);
-       fprintf(f,"istore_%d",findFuncSymbol(func_st,ast->expr1->id->id->lexeme));
+    //Need to load the results of expr1 & expr2 here somehow
+    //NVM JUST DO IT NOW IT SHOULD WORK
+
+    if(getTokenType(ast->op->op) != ASSIGNOP){
+        generateExpressionSTCode(f, func_st, ast->expr1);
+        generateExpressionSTCode(f, func_st, ast->expr2);
     }
 
-    //Boolean Expression Evaluation (< <= > >= == !=)
+    switch(getTokenType(ast->op->op)){
+        case ASSIGNOP:
+            //Variable Assignment
+            if(ast->expr1->type == ID_EXPR && getTokenType(ast->op->op) == ASSIGNOP){
+                generateExpressionSTCode(f, func_st, ast->expr2);
+                fprintf(f,"\tistore_%d\n",findFuncSymbol(func_st,ast->expr1->id->id->lexeme));
+            }
+        break;
+        case RELOP:
+            //Boolean Expression Evaluation (< <= > >= == !=)
+            if(strcmp(ast->op->op->lexeme, "<") == 0){
+                fprintf(f,"\tif_icmplt label_0\n");
+            }
+            else if(strcmp(ast->op->op->lexeme, "<=") == 0){
+                fprintf(f,"\tif_icmple label_0\n");
+            }
+            else if(strcmp(ast->op->op->lexeme, ">") == 0){
+                fprintf(f,"\tif_icmpgt label_0\n");
+            }
+            else if(strcmp(ast->op->op->lexeme, ">=") == 0){
+                fprintf(f,"\tif_icmpge label_0\n");
+            }
+            else if(strcmp(ast->op->op->lexeme, "==") == 0){
+                fprintf(f,"\tif_icmpeq label_0\n");
+            }
+            else if(strcmp(ast->op->op->lexeme, "!=") == 0){
+                fprintf(f,"\tif_icmpne label_0\n");
+            }
 
-    if(strcmp(ast->op->op->lexeme, "<" == 0){
-        fprintf(f,"\tifcmplt label_0\n");
+            fprintf(f,"\ticonst_1\n");
+            fprintf(f,"\tgoto label_1\n");
+            fprintf(f,"label_0:\n");
+            fprintf(f,"\ticonst_0\n");
+            fprintf(f,"label_1:\n");
+            
+        break;
+        case ADDOP: case MULOP: //Arithmetic Expression Evaluation (+ - * / % || &&)
+            if(strcmp(ast->op->op->lexeme, "+") == 0){
+                fprintf(f,"\tiadd\n");
+            }
+            else if(strcmp(ast->op->op->lexeme, "-") == 0){
+                fprintf(f,"\timul\n");
+            }
+            else if(strcmp(ast->op->op->lexeme, "*") == 0){
+                fprintf(f,"\tisub\n");
+            }
+            else if(strcmp(ast->op->op->lexeme, "/") == 0){
+                fprintf(f,"\tidiv\n");
+            }
+            else if(strcmp(ast->op->op->lexeme, "%") == 0){
+                fprintf(f,"\tirem\n");
+            }
+            else if(strcmp(ast->op->op->lexeme, "||") == 0){
+                fprintf(f,"\tior\n");
+            }
+            else if(strcmp(ast->op->op->lexeme, "&&") == 0){
+                fprintf(f,"\tiand\n");
+            }
+        break;
+        default:
+            printf("ERROR: NOT AN OPERATOR\n");
+            exit(0);
     }
-    else if(strcmp(ast->op->op->lexeme, "<=" == 0){
-        fprintf(f,"\tifcmple label_0\n");
-    }
-    else if(strcmp(ast->op->op->lexeme, ">" == 0){
-        fprintf(f,"\tifcmpgt label_0\n");
-    }
-    else if(strcmp(ast->op->op->lexeme, ">=" == 0){
-        fprintf(f,"\tifcmpge label_0\n");
-    }
-    else if(strcmp(ast->op->op->lexeme, "==" == 0){
-        fprintf(f,"\tifcmpeq label_0\n");
-    }
-     else if(strcmp(ast->op->op->lexeme, "!=" == 0){
-        fprintf(f,"\tifcmpne label_0\n");
-    }
-
-    fprintf(f,"\ticonst_1\n");
-    fprintf(f,"\tgoto label_1\n");
-    fprintf(f,"label_0:\n");
-    fprintf(f,"\ticonst_0\n");
-    fprintf(f,"label_1\n");
-
-
-
-    //Arithmetic Expression Evaluation (+ - * / % || &&)
-    if(strcmp(ast->op->op->lexeme, "+" == 0){
-         fprintf(f,"iadd\n");
-    }
-    else if(strcmp(ast->op->op->lexeme, "-" == 0){
-        fprintf(f,"imul\n");
-    }
-    else if(strcmp(ast->op->op->lexeme, "*" == 0){
-        fprintf(f,"isub\n");
-    }
-    else if(strcmp(ast->op->op->lexeme, "/" == 0){
-        fprintf(f,"idiv\n");
-    }
-    else if(strcmp(ast->op->op->lexeme, "%" == 0){
-        fprintf(f,"idiv\n");
-    }
-    else if(strcmp(ast->op->op->lexeme, "||" == 0){
-        fprintf(f,"ior\n");
-    }
-    else if(strcmp(ast->op->op->lexeme, "&&" == 0){
-        fprintf(f,"iand\n");
-    }
-    
-
-
 }
+
 void generateMinusSTCode(FILE *f, FuncDefST func_st, MinusST ast){
-    
+    generateExpressionSTCode(f, func_st, ast->expr);
+    fprintf(f,"\tineg\n");
 }
+
 void generateNotSTCode(FILE *f, FuncDefST func_st, NotST ast){
 
 }

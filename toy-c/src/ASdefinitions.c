@@ -191,12 +191,12 @@ void generateFuncDefCode(FILE *f, FuncDefST ast){
 
     if(strcmp(ast->id->lexeme,"main") != 0)
       fprintf(f,")%s\n", getTokenType(ast->type) == INT ? "I" : "C");
-    
+
     fprintf(f,"\t.limit locals %d\n",10);     
     fprintf(f,"\t.limit stack %d\n\n",10);   
 
     for(int x=0;x<ast->vardef_index;x++)
-      generateVarDefCode(f,ast->vardef_tree[x]);
+      generateVarDefCode(f,ast->vardef_tree[x]); //Useless
 
     generateBlockSTCode(f, ast, ast->block_state);
 

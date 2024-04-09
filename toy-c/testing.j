@@ -13,17 +13,19 @@
 	.limit locals 10
 	.limit stack 10
 
-	getstatic java/lang/System/out Ljava/io/PrintStream;
-	ldc "\n"
-	invokevirtual java/io/PrintStream.println(Ljava/lang/String;)V
-	getstatic java/lang/System/out Ljava/io/PrintStream;
-	ldc "\n"
-	invokevirtual java/io/PrintStream.println(Ljava/lang/String;)V
+	bipush 0
+	istore_0
 	bipush 1
-	bipush 2
-	bipush 3
-	ldc "HELLO"
-	load some shit here later 0
+	istore_1
+	iload_0
+	iload_1
+	if_icmplt label_0
+	iconst_1
+	goto label_1
+label_0:
+	iconst_0
+label_1:
+	istore_0
 	return
 .end method
 
