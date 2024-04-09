@@ -18,6 +18,6 @@ void addDefinition(ProgramST, DefinitionST);
 char *ProgramST_ToString(ProgramST);
 
 //Code Generation Function 
-char *generateProgramCode(ProgramST st);
+void generateProgramCode(FILE *f, ProgramST ast);
 
 #endif

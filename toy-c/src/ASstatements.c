@@ -365,8 +365,51 @@ void addFuncSymbols(SymTable st, BlockStateST ast){
 //    // addStatementSymbol(SymTable st, StatementST ast->statement_tree[x]);
 // }
 
-char *generateBlockSTCode(FuncDefST func_st, BlockStateST st){
-   // checkBlockStateSemantics(st);
-    printf("ENDING IN GENERATE blockstate\n");
-    exit(0);
-}
+// //Code Generation Functions
+// char *generateBreakSTCode(FuncDefST func_st, BreakStateST ast);
+// char *generateIFSTCode(FuncDefST func_st, IfStateST ast);
+// char *generateNullSTCode(FuncDefST func_st, NullStateST ast);
+// char *generateReturnSTCode(FuncDefST func_st, ReturnStateST ast);
+// char *generateWhileSTCode(FuncDefST func_st, WhileStateST ast);
+// char *generateReadSTCode(FuncDefST func_st, ReadStateST ast);
+// char *generateWriteSTCode(FuncDefST func_st, WriteStateST ast);
+// char *generateNewlineSTCode(FuncDefST func_st, NewlineStateST ast);
+
+// //Semantic Check Functions
+// void checkBreakSTSemantics(FuncDefST func_st, BreakStateST ast); 
+// void checkIFSTSemantics(FuncDefST func_st, IfStateST ast);
+// void checkNullSTSemantics(FuncDefST func_st, NullStateST ast);
+// void checkReturnSTSemantics(FuncDefST func_st, ReturnStateST ast); //Return type must match func type
+// void checkWhileSTSemantics(FuncDefST func_st, WhileStateST ast);
+// void checkReadSTSemantics(FuncDefST func_st, ReadStateST ast);
+// void checkWriteSTSemantics(FuncDefST func_st, WriteStateST ast);
+// void checkNewlineSTSemantics(FuncDefST func_st, NewlineStateST ast);
+
+
+// void generateBlockSTCode(FILE *f, FuncDefST func_st, BlockStateST ast){
+
+//     for(int x=0;x<ast->statement_index;x++){
+//       generateStatementSTcode(ast->statement_tree[x]);
+//       switch(ast->statement_tree[x]->type) {
+//         case EXPR_STATE: return generateExpressionSTcode(ast->expr_tree); 
+//         case BREAK_STATE:  return generateBreakStateSTcode(ast->break_tree); 
+//         case BLOCK_STATE:  return generateBlockSTcode(ast->block_tree); 
+//         case IF_STATE: return  generateIFSTcode(ast->if_tree);
+//         case NULL_STATE:  return generateNullSTcode(ast->null_tree);
+//         case RETURN_STATE: return generateReturnSTcode(func_st, ast->return_tree);
+//         case WHILE_STATE: return generateWhileSTcode(ast->while_tree);
+//         case READ_STATE: return generateReadSTcode(ast->read_tree);
+//         case WRITE_STATE: return generateWriteSTcode(ast->write_tree);
+//         case NEWLINE_STATE: return generateNewlineSTcode(ast->newline_tree);
+//       default:
+//         printf("INTERNAL ERROR IN generateBlockSTcode()\n");
+//         exit(EXIT_FAILURE);
+//     }
+//     }
+
+//     printf("ENDING IN GENERATE blockstate\n");
+//     exit(0);
+// }
+
+
+

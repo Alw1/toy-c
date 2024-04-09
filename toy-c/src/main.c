@@ -48,9 +48,6 @@ int main(int argc, char *argv[]){
     Scanner scanner = createScanner(source_file);
     ProgramST program_ast = Program(scanner);  
 
-    if(debug_code_gen)
-        generateJasminCode(program_ast);
-
     if(debug_scanner)
         printf("[SCANNER] total tokens: %d\n", scanner->token_tot-1);
 
@@ -59,6 +56,12 @@ int main(int argc, char *argv[]){
 
     if(debug_file || verbose)
         printFile(scanner->source_file);
+
+    FILE *output = fopen("testing.j","w");
+
+    if(debug_code_gen)
+        generateJasminCode(output, program_ast);
+
 
     fclose(source_file); 
     
@@ -126,6 +129,9 @@ void parseArguments(int argc, char* argv[]){
         else 
               strcpy(source_filename,argv[x]);  
     }
+
+   
+
 }
 
 void printHelpMessage(){

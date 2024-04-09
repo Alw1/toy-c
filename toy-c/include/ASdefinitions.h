@@ -35,9 +35,9 @@ void checkFuncDefSemantics(FuncDefST ast);
 void checkVarDefSemantics(SymTable global_st, SymTable func_st,FuncDefST ast);
 
 //Jasmin Code Generation
-char *generateDefinitionCode(DefinitionST ast);
-char *generateVarDefCode(VarDefST ast);
-char *generateFuncDefCode(FuncDefST ast);
+void generateDefinitionCode(FILE *f, DefinitionST ast);
+void generateVarDefCode(FILE *f, VarDefST ast);
+void generateFuncDefCode(FILE *f, FuncDefST ast);
 
 
 

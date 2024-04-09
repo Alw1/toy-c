@@ -16,6 +16,7 @@
 #include "../include/ASexpressions.h"
 #include "../include/ASdefinitions.h"
 #include "../include/ASstatements.h"
+#include "../include/CGJasmin.h"
 
 struct DefinitionST_t {
   enum definition_prods def_type;
@@ -124,7 +125,7 @@ void addBlockStateFuncDefST(FuncDefST ast, BlockStateST block){
 }
 
 void addFuncDefVarDefST(FuncDefST ast, VarDefST def){
-  //addSymbol(ast->sym_table,createSymbol(VAR,getVarDef_ID(def)));
+  addSymbol(ast->sym_table,createSymbol(VAR,getVarDef_ID(def)));
   ast->vardef_tree[ast->vardef_index++] = def;
 }
 
@@ -138,38 +139,31 @@ char *getVarDef_ID(VarDefST st){
     return toString_ID(st->id);
 }
 
-void checkFuncDefSemantics(FuncDefST ast){
-  //printf("OJI\n");
-    for(int x=0;x<ast->vardef_index;x++)
-      addSymbol(ast->sym_table,createSymbol(VAR,getVarDef_ID(ast->vardef_tree[x])));
-
-    //checkBlockStateSemantics(ast->sym_table, st->block_state);
-}
-
-// void checkVarDefSemantics(VarDefST st){
-//     addSymbol(ast->sym_table,createSymbol(VAR,getVarDef_ID(def)));    
-// }
-
-char *generateDefinitionCode(DefinitionST st){
+void generateDefinitionCode(FILE *f, DefinitionST st){
   switch(st->def_type){
     case VarDef:
-      return generateVarDefCode(st->VarDef_tree);
+      generateVarDefCode(f,st->VarDef_tree);
     case FuncDef:
-      return generateFuncDefCode(st->FuncDef_tree);
+      generateFuncDefCode(f,st->FuncDef_tree);
   }
 }
 
-char *generateVarDefCode(VarDefST st){
-    return "NOTHING YET";
+void generateVarDefCode(FILE *f, VarDefST st){
+    //findSymbol(st->if)
+
 }
 
-char *generateFuncDefCode(FuncDefST st){
-    checkFuncDefSemantics(st);
-    
-    for(int x=0;x<st->vardef_index;x++)
-      generateVarDefCode(st->vardef_tree[x]);
+void generateFuncDefCode(FILE *f, FuncDefST ast){
+    //checkFuncDefSemantics(st);
 
-    generateBlockSTCode(st, st->block_state);
-    
-    return "NOTHING YET";
+    fprintf(f,".method public static %s()I\n","HI");//ast->id->lexeme);  //lexeme seems broken, fix
+    fprintf(f,"\t.limit locals %d\n",10);     
+    fprintf(f,"\t.limit stack %d\n",10);   
+    printf("\n\nTESTING THIS FAR IN JASMINECODE\n");
+    exit(0);
+
+    for(int x=0;x<ast->vardef_index;x++)
+      generateVarDefCode(f,ast->vardef_tree[x]);
+
+    //generateBlockSTCode(st, st->block_state);
 }

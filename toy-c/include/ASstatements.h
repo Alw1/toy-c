@@ -70,15 +70,15 @@ void addReadStateIDST(ReadStateST, Token);
 void addFuncSymbols(SymTable st, BlockStateST ast);
 
 //Code Generation Functions
-char *generateBlockSTCode(FuncDefST func_st, BlockStateST ast);
-char *generateBreakSTCode(FuncDefST func_st, BreakStateST ast);
-char *generateIFSTCode(FuncDefST func_st, IfStateST ast);
-char *generateNullSTCode(FuncDefST func_st, NullStateST ast);
-char *generateReturnSTCode(FuncDefST func_st, ReturnStateST ast);
-char *generateWhileSTCode(FuncDefST func_st, WhileStateST ast);
-char *generateReadSTCode(FuncDefST func_st, ReadStateST ast);
-char *generateWriteSTCode(FuncDefST func_st, WriteStateST ast);
-char *generateNewlineSTCode(FuncDefST func_st, NewlineStateST ast);
+char *generateBlockSTCode(FILE *f, FuncDefST func_st, BlockStateST ast);
+char *generateBreakSTCode(FILE *f, FuncDefST func_st, BreakStateST ast);
+char *generateIFSTCode(FILE *f, FuncDefST func_st, IfStateST ast);
+char *generateNullSTCode(FILE *f, FuncDefST func_st, NullStateST ast);
+char *generateReturnSTCode(FILE *f, FuncDefST func_st, ReturnStateST ast);
+char *generateWhileSTCode(FILE *f, FuncDefST func_st, WhileStateST ast);
+char *generateReadSTCode(FILE *f, FuncDefST func_st, ReadStateST ast);
+char *generateWriteSTCode(FILE *f, FuncDefST func_st, WriteStateST ast);
+char *generateNewlineSTCode(FILE *f, FuncDefST func_st, NewlineStateST ast);
 
 //Semantic Check Functions
 void checkBlockSTSemantics(FuncDefST func_st, BlockStateST ast);

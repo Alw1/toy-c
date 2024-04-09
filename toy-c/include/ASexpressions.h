@@ -63,15 +63,15 @@ void checkOperatorSTSemantics(OperatorST ast);
 
 
 //Code Generation Functions
-char *generateExpressionSTcode(ExpressionST ast);
-char *generateExprSTcode(ExprST ast);
-char *generateNotSTcode(NotST ast);
-char *generateMinusSTcode(MinusST ast);
-char *generateNumberSTcode(NumberST ast);
-char *generateIdSTcode(IdST ast);
-char *generateCharSTcode(CharST ast);
-char *generateStringSTcode(StringST ast);
-char *generateFuncCallSTcode(FuncCallST ast);
-char *generateOperatorSTcode(OperatorST ast);
+char *generateExpressiofnSTCode(FILE *f, ExpressionST ast);
+char *generateExprSTCode(FILE *f, ExprST ast);
+char *generateNotSTCode(FILE *f, NotST ast);
+char *generateMinusSTCode(FILE *f, MinusST ast);
+char *generateNumberSTCode(FILE *f, NumberST ast);
+char *generateIdSTCode(FILE *f, IdST ast);
+char *generateCharSTCode(FILE *f, CharST ast);
+char *generateStringSTCode(FILE *f, StringST ast);
+char *generateFuncCallSTCode(FILE *f, FuncCallST ast);
+char *generateOperatorSTCode(FILE *f, OperatorST ast);
 
 #endif

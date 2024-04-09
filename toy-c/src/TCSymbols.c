@@ -71,7 +71,6 @@ void addSymbol(SymTable st, Symbol s){
             default:
                 exit(0);
         }
-        exit(0);
     }
     
     st->arr[st->size++] = s;

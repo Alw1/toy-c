@@ -3,6 +3,8 @@
 */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include "../include/TCglobals.h"
 #include "../include/CGJasmin.h"
 #include "../include/ASprogram.h"
 
@@ -16,34 +18,49 @@
 */
 
 
-void generateJasminDirectives(FILE *f,char *source_name,char *output_name){
+void generateJasminDirectives(FILE *f, char *source_name,char *output_name){
+
     fprintf(f,".source %s\n",source_name); 
     fprintf(f,".class  public %s\n",output_name); 
-    fprintf(f,".super  java/lang/Object\n");       
+    fprintf(f,".super  java/lang/Object\n\n\n");      
 }
 
 void generateMethodHeader(FILE *f,char *label,char *params){
-     fprintf(f,".method public static %s(%s)V\n",label,params); 
-     fprintf(f,"\t.limit locals %d",MAX_LOCALS);     
-     fprintf(f,"\t.limit stack %d",MAX_STACK);     
+     fprintf(f,".method public static %s(%s)I\n",label,params); 
+     fprintf(f,"\t.limit locals %d\n",MAX_LOCALS);     
+     fprintf(f,"\t.limit stack %d\n",MAX_STACK);     
 }
+
+void generateConstructor(FILE *f){
+    fprintf(f,".method public <init>V\n");
+    fprintf(f,"\taload_0\n");
+    fprintf(f,"\tinvokenonvirtual java/lang/Object/<init>()V\n");
+    fprintf(f,"\treturn\n");
+    fprintf(f,".end method\n\n");
+}
+
 
 // void writeMethodReturn(FILE *f, ReturnStateST st){
 //      //fprintf(f,"\treturn %s",label,params); 
 //      fprintf(f,".end method");     
 // }
 
-void generateJasminCode(ProgramST st){
-    //Create FILE HERE
-    //FILE *output_file
-    //writeJasmineDirectives();
-    generateProgramCode(st);
+void generateJasminCode(FILE *f, ProgramST ast){
+    generateJasminDirectives(f, source_filename,output_filename);
+    generateConstructor(f);
+    generateProgramCode(f,ast);
 }
 
-void writeIntegerAssignment(FILE *f, int num, int frame){
-    fprintf(f,"iconst_%d\n",num); 
-    fprintf(f,"istore_%d\n",frame); 
-}
+/*
+    REMEMBER TO MAKE OutputFileWriter Struct to handle output file creation,
+    writing, and destruction in case of incomplete code generation.
+*/
 
 
+// struct FileWriter_t{
+//     FILE *output_file;
+// };
 
+// typerdef FileWriter_t *FileWriter;
+
+// FileWriter createFileWriter();

@@ -10,8 +10,9 @@ int main(int z){
    int y;
 }
 
-int x(){
+int x(int x){
    int a;
    int b;
    char z;
 }
+
