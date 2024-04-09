@@ -140,30 +140,54 @@ char *getVarDef_ID(VarDefST st){
 }
 
 void generateDefinitionCode(FILE *f, DefinitionST st){
+
+  //printf("%s",DefinitionST_ToString(st));
+
   switch(st->def_type){
     case VarDef:
       generateVarDefCode(f,st->VarDef_tree);
+      break;
     case FuncDef:
       generateFuncDefCode(f,st->FuncDef_tree);
+      break;
   }
 }
 
 void generateVarDefCode(FILE *f, VarDefST st){
     //findSymbol(st->if)
+    // printf("IN VARDEF GEN\n\n");
+    // printf("%s",VarDefST_ToString(st));
+   //Doesn't need to do anything, code only generates on assignment
+   //Symbol table needs to keep track of variables to know whihc
+   //register to save in 
 
 }
 
 void generateFuncDefCode(FILE *f, FuncDefST ast){
-    //checkFuncDefSemantics(st);
+    fprintf(f,".method public static %s(",ast->id->lexeme);
+    for(int x=0;x<ast->vardef_index;x++)
+    switch(getTokenType(ast->vardef_tree[x]->type)){
+      case INT:
+           fprintf(f,"%s","I");
+           break;  
+      case CHAR:
+           printf("ERROR: CHAR TYPE NOT ALLOWED\n");
+           exit(0);
+           fprintf(f,"%s","C");
+           break;
+      default:
+          printf("ERROR: UNKNOWN TYPE IN FUNCTION\n");
+          exit(0);
+    }
 
-    fprintf(f,".method public static %s()I\n","HI");//ast->id->lexeme);  //lexeme seems broken, fix
+    fprintf(f,")%s\n", getTokenType(ast->type) == INT ? "I" : "C");
     fprintf(f,"\t.limit locals %d\n",10);     
     fprintf(f,"\t.limit stack %d\n",10);   
-    printf("\n\nTESTING THIS FAR IN JASMINECODE\n");
-    exit(0);
 
     for(int x=0;x<ast->vardef_index;x++)
       generateVarDefCode(f,ast->vardef_tree[x]);
 
-    //generateBlockSTCode(st, st->block_state);
+    generateBlockSTCode(f, ast, ast->block_state);
+
+    fprintf(f,".end method\n\n");
 }

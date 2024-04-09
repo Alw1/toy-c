@@ -49,29 +49,29 @@ char *OperatorST_ToString(OperatorST);
 void addFuncCallExpressionST(FuncCallST, ExpressionST);
 
 
-//Semantic Check Functions
-void checkExpressionSTSemantics(ExpressionST ast);
-void checkExprStSemantics(ExprST ast);
-void checkNotSTSemantics(NotST ast);
-void checkMinusSTSemantics(MinusST ast);
-void checkNumberSTSemantics(NumberST ast);
-void checkIdSTSemantics(IdST ast);
-void checkCharSTSemantics(CharST ast);
-void checkStringSTSemantics(StringST ast);
-void checkFuncCallSTSemantics(FuncCallST ast);
-void checkOperatorSTSemantics(OperatorST ast);
+// //Semantic Check Functions
+// void checkExpressionSTSemantics(ExpressionST ast);
+// void checkExprStSemantics(ExprST ast);
+// void checkNotSTSemantics(NotST ast);
+// void checkMinusSTSemantics(MinusST ast);
+// void checkNumberSTSemantics(NumberST ast);
+// void checkIdSTSemantics(IdST ast);
+// void checkCharSTSemantics(CharST ast);
+// void checkStringSTSemantics(StringST ast);
+// void checkFuncCallSTSemantics(FuncCallST ast);
+// void checkOperatorSTSemantics(OperatorST ast);
 
 
-//Code Generation Functions
-char *generateExpressiofnSTCode(FILE *f, ExpressionST ast);
-char *generateExprSTCode(FILE *f, ExprST ast);
-char *generateNotSTCode(FILE *f, NotST ast);
-char *generateMinusSTCode(FILE *f, MinusST ast);
-char *generateNumberSTCode(FILE *f, NumberST ast);
-char *generateIdSTCode(FILE *f, IdST ast);
-char *generateCharSTCode(FILE *f, CharST ast);
-char *generateStringSTCode(FILE *f, StringST ast);
-char *generateFuncCallSTCode(FILE *f, FuncCallST ast);
-char *generateOperatorSTCode(FILE *f, OperatorST ast);
+// //Code Generation Functions
+// void generateExpressionSTCode(FILE *f, ExpressionST ast);
+// void generateExprSTCode(FILE *f, ExprST ast);
+// void generateNotSTCode(FILE *f, NotST ast);
+// void generateMinusSTCode(FILE *f, MinusST ast);
+// void generateNumberSTCode(FILE *f, NumberST ast);
+// void generateIdSTCode(FILE *f, IdST ast);
+// void generateCharSTCode(FILE *f, CharST ast);
+// void generateStringSTCode(FILE *f, StringST ast);
+// void generateFuncCallSTCode(FILE *f, FuncCallST ast);
+// void generateOperatorSTCode(FILE *f, OperatorST ast);
 
 #endif

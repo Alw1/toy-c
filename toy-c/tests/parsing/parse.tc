@@ -10,9 +10,14 @@ int main(int z){
    int y;
 }
 
-int x(int x){
+char x(int x){
    int a;
    int b;
    char z;
+}
+
+int functwo(int x, int y, int z){
+   newline;
+
 }
 

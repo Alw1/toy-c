@@ -347,12 +347,6 @@ ExpressionST Primary(Scanner s){
   IdST temp_id = NULL;
   switch(getTokenType(s->curr_token)){
     case ID: 
-        //Needs to be in function ST
-        // if(!findSymbol(global_st,toString_ID(s->curr_token)))
-        // {
-        //     printf("ERROR: SYMBOL USED BEFORE DECLARATION %s\n", toString_ID(s->curr_token));
-        //     exit(0);
-        // }
         temp_id = createIdST(s->curr_token); match(ID,s); 
         if(getTokenType(s->curr_token) == LPAREN)
           expr = createExpressionST(FunctionCall(s,temp_id),FUNC_CALL_EXPR);

@@ -69,26 +69,30 @@ void addReadStateIDST(ReadStateST, Token);
 //For Function Symbol tables 
 void addFuncSymbols(SymTable st, BlockStateST ast);
 
-//Code Generation Functions
-char *generateBlockSTCode(FILE *f, FuncDefST func_st, BlockStateST ast);
-char *generateBreakSTCode(FILE *f, FuncDefST func_st, BreakStateST ast);
-char *generateIFSTCode(FILE *f, FuncDefST func_st, IfStateST ast);
-char *generateNullSTCode(FILE *f, FuncDefST func_st, NullStateST ast);
-char *generateReturnSTCode(FILE *f, FuncDefST func_st, ReturnStateST ast);
-char *generateWhileSTCode(FILE *f, FuncDefST func_st, WhileStateST ast);
-char *generateReadSTCode(FILE *f, FuncDefST func_st, ReadStateST ast);
-char *generateWriteSTCode(FILE *f, FuncDefST func_st, WriteStateST ast);
-char *generateNewlineSTCode(FILE *f, FuncDefST func_st, NewlineStateST ast);
+// //Code Generation Functions
+void generateStatementSTCode(FILE *f, FuncDefST func_st, StatementST ast);
+void generateExpressionSTCode(FILE *f, FuncDefST func_st, ExpressionStateST ast);
+void generateBlockSTCode(FILE *f, FuncDefST func_st, BlockStateST ast);
+void generateBreakSTCode(FILE * f, FuncDefST func_st, BreakStateST ast);
+void generateIFSTCode(FILE * f, FuncDefST func_st, IfStateST ast);
+void generateNullSTCode(FILE * f, FuncDefST func_st, NullStateST ast);
+void generateReturnSTCode(FILE * f, FuncDefST func_st, ReturnStateST ast);
+void generateWhileSTCode(FILE * f, FuncDefST func_st, WhileStateST ast);
+void generateReadSTCode(FILE * f, FuncDefST func_st, ReadStateST ast);
+void generateWriteSTCode(FILE * f, FuncDefST func_st, WriteStateST ast);
+void generateNewlineSTCode(FILE * f, FuncDefST func_st, NewlineStateST ast);
 
-//Semantic Check Functions
-void checkBlockSTSemantics(FuncDefST func_st, BlockStateST ast);
-void checkBreakSTSemantics(FuncDefST func_st, BreakStateST ast); 
-void checkIFSTSemantics(FuncDefST func_st, IfStateST ast);
-void checkNullSTSemantics(FuncDefST func_st, NullStateST ast);
+
+
+// //Semantic Check Functions
+// void checkBlockSTSemantics(FuncDefST func_st, BlockStateST ast);
+// void checkBreakSTSemantics(FuncDefST func_st, BreakStateST ast); 
+// void checkIFSTSemantics(FuncDefST func_st, IfStateST ast);
+// void checkNullSTSemantics(FuncDefST func_st, NullStateST ast);
 void checkReturnSTSemantics(FuncDefST func_st, ReturnStateST ast); //Return type must match func type
-void checkWhileSTSemantics(FuncDefST func_st, WhileStateST ast);
-void checkReadSTSemantics(FuncDefST func_st, ReadStateST ast);
-void checkWriteSTSemantics(FuncDefST func_st, WriteStateST ast);
-void checkNewlineSTSemantics(FuncDefST func_st, NewlineStateST ast);
+// void checkWhileSTSemantics(FuncDefST func_st, WhileStateST ast);
+// void checkReadSTSemantics(FuncDefST func_st, ReadStateST ast);
+// void checkWriteSTSemantics(FuncDefST func_st, WriteStateST ast);
+// void checkNewlineSTSemantics(FuncDefST func_st, NewlineStateST ast);
 
 #endif
