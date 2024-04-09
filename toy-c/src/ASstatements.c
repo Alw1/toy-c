@@ -431,7 +431,7 @@ void generateBreakSTCode(FILE * f, FuncDefST func_st, BreakStateST ast){
     //Don't need to implement, look at last
 }
 void generateIFSTCode(FILE * f, FuncDefST func_st, IfStateST ast){
-
+  
 }
 void generateNullSTCode(FILE * f, FuncDefST func_st, NullStateST ast){
     //Useless, dont worry about this
