@@ -146,16 +146,16 @@ StatementST createStatementST(enum statement_prod type, void *tree) {
   ast->type = type;
 
   switch(ast->type) {
-  case EXPR_STATE:  ast->expr_tree = (ExpressionStateST)tree; break;
-  case BREAK_STATE:  ast->break_tree = (BreakStateST)tree; break;
-  case BLOCK_STATE:  ast->block_tree = (BlockStateST)tree; break;
-  case IF_STATE:  ast->if_tree = (IfStateST)tree; break;
-  case NULL_STATE:  ast->null_tree = (NullStateST)tree; break;
-  case RETURN_STATE:  ast->return_tree = (ReturnStateST)tree; break;
-  case WHILE_STATE:  ast->while_tree = (WhileStateST)tree; break;
-  case READ_STATE:  ast->read_tree = (ReadStateST)tree; break;
-  case WRITE_STATE:  ast->write_tree = (WriteStateST)tree; break;
-  case NEWLINE_STATE:  ast->newline_tree = (NewlineStateST)tree; break;
+    case EXPR_STATE:  ast->expr_tree = (ExpressionStateST)tree; break;
+    case BREAK_STATE:  ast->break_tree = (BreakStateST)tree; break;
+    case BLOCK_STATE:  ast->block_tree = (BlockStateST)tree; break;
+    case IF_STATE:  ast->if_tree = (IfStateST)tree; break;
+    case NULL_STATE:  ast->null_tree = (NullStateST)tree; break;
+    case RETURN_STATE:  ast->return_tree = (ReturnStateST)tree; break;
+    case WHILE_STATE:  ast->while_tree = (WhileStateST)tree; break;
+    case READ_STATE:  ast->read_tree = (ReadStateST)tree; break;
+    case WRITE_STATE:  ast->write_tree = (WriteStateST)tree; break;
+    case NEWLINE_STATE:  ast->newline_tree = (NewlineStateST)tree; break;
   default:
     printf("internal error\n");
     exit(EXIT_FAILURE);
@@ -274,16 +274,16 @@ char *NewlineStateST_ToString(NewlineStateST ast){
 
 char *StatementST_ToString(StatementST ast){
   switch(ast->type) {
-  case EXPR_STATE: return ExpressionStateST_ToString(ast->expr_tree); 
-  case BREAK_STATE:  return BreakStateST_ToString(ast->break_tree); 
-  case BLOCK_STATE:  return BlockStateST_ToString(ast->block_tree); 
-  case IF_STATE: return  IfStateST_ToString(ast->if_tree);
-  case NULL_STATE:  return NullStateST_ToString(ast->null_tree);
-  case RETURN_STATE: return ReturnStateST_ToString(ast->return_tree);
-  case WHILE_STATE: return WhileStateST_ToString(ast->while_tree);
-  case READ_STATE: return ReadStateST_ToString(ast->read_tree);
-  case WRITE_STATE: return WriteStateST_ToString(ast->write_tree);
-  case NEWLINE_STATE: return NewlineStateST_ToString(ast->newline_tree);
+    case EXPR_STATE: return ExpressionStateST_ToString(ast->expr_tree); 
+    case BREAK_STATE:  return BreakStateST_ToString(ast->break_tree); 
+    case BLOCK_STATE:  return BlockStateST_ToString(ast->block_tree); 
+    case IF_STATE: return  IfStateST_ToString(ast->if_tree);
+    case NULL_STATE:  return NullStateST_ToString(ast->null_tree);
+    case RETURN_STATE: return ReturnStateST_ToString(ast->return_tree);
+    case WHILE_STATE: return WhileStateST_ToString(ast->while_tree);
+    case READ_STATE: return ReadStateST_ToString(ast->read_tree);
+    case WRITE_STATE: return WriteStateST_ToString(ast->write_tree);
+    case NEWLINE_STATE: return NewlineStateST_ToString(ast->newline_tree);
   default:
     printf("INTERNAL ERROR IN StatementST_ToString()\n");
     exit(EXIT_FAILURE);
@@ -333,8 +333,8 @@ void checkReturnSTSemantics(FuncDefST func_st, ReturnStateST ast){
     exit(0);
 }
 
-
 void generateStatementSTCode(FILE *f, FuncDefST func_st, StatementST ast){
+
       switch(ast->type) {
         case EXPR_STATE: generateExpressionStateSTCode(f, func_st, ast->expr_tree); break;
         case BREAK_STATE: generateBreakSTCode(f, func_st, ast->break_tree); break;
@@ -347,7 +347,7 @@ void generateStatementSTCode(FILE *f, FuncDefST func_st, StatementST ast){
         case WRITE_STATE: generateWriteSTCode(f, func_st, ast->write_tree); break;
         case NEWLINE_STATE: generateNewlineSTCode(f, func_st, ast->newline_tree); break;
       default:
-        printf("INTERNAL ERROR IN generateBlockSTCode()\n");
+        printf("INTERNAL ERROR IN generateStatementSTCode()\n");
         exit(EXIT_FAILURE);
     }
 }
@@ -357,47 +357,52 @@ void generateBlockSTCode(FILE *f, FuncDefST func_st, BlockStateST ast){
       generateStatementSTCode(f, func_st, ast->statement_tree[x]);
 }
 
-
-// // //Code Generation Functions
+//Code Generation Functions
 
 void generateExpressionStateSTCode(FILE *f,FuncDefST func_st,ExpressionStateST ast){
     generateExpressionSTCode(f,func_st,ast->expr);
 }
+
 void generateBreakSTCode(FILE * f, FuncDefST func_st, BreakStateST ast){
     //Don't need to implement, look at last
-    fprintf("\tgoto break\n");
+    fprintf(f,"\tgoto break\n");
     /*
       Idea: make a break label at each scope, and call this funciton when break is met,
       it should jump out of the current scope only
     */
 }
 
-void generateIFSTCode(FILE * f, FuncDefST func_st, IfStateST ast){
+void generateIFSTCode(FILE *f, FuncDefST func_st, IfStateST ast){
+    /*
+        Note: segfaults for some reason, fix later
+    */
+    
+
     generateExpressionSTCode(f,func_st,ast->expr_tree);
     fprintf(f,"\ticonst_0\n");
     fprintf(f,"\tif_icmpne else_label\n");
     generateStatementSTCode(f,func_st,ast->if_tree);
     fprintf(f,"\tgoto end_if\n");
     fprintf(f,"else_label:\n");
-    generateStatementSTCode(f,func_st,ast->else_tree);
+    if(ast->else_tree != NULL)
+      generateStatementSTCode(f,func_st,ast->else_tree);
     fprintf(f,"end_if:\n");
-
-    fprintf("\tbreak:\n");
+    fprintf(f,"\tbreak:\n");
 }
 
-void generateNullSTCode(FILE * f, FuncDefST func_st, NullStateST ast){
+void generateNullSTCode(FILE *f, FuncDefST func_st, NullStateST ast){
     //Useless, dont worry about this
 }
 
-void generateReturnSTCode(FILE * f, FuncDefST func_st, ReturnStateST ast){
+void generateReturnSTCode(FILE* f, FuncDefST func_st, ReturnStateST ast){
     //Have semantic check to make sure return type matches the func type
     //use int conversion to test if return type is correct
     //printf("\tireturn\n");
-    printf("\tireturn\n");
+   // fprintf(f,"\tireturn\n");
 }
 
 //Not working yet
-void generateWhileSTCode(FILE * f, FuncDefST func_st, WhileStateST ast){
+void generateWhileSTCode(FILE* f, FuncDefST func_st, WhileStateST ast){
     generateExpressionSTCode(f, func_st,ast->expr_tree);
     fprintf(f,"loop:\n");
     fprintf(f,"\ticonst_0\n");
@@ -405,22 +410,22 @@ void generateWhileSTCode(FILE * f, FuncDefST func_st, WhileStateST ast){
     generateStatementSTCode(f,func_st,ast->statement_tree);
     fprintf(f,"loop:\n");
     fprintf(f,"end_loop:\n");
-    fprintf("\tbreak:\n");
+    fprintf(f,"\tbreak:\n");
 }
 
 
-void generateReadSTCode(FILE * f, FuncDefST func_st, ReadStateST ast){
+void generateReadSTCode(FILE* f, FuncDefST func_st, ReadStateST ast){
     fprintf(f,"\tgetstatic #9 <Field System.in:InputStream>\n");
 }
 
-void generateWriteSTCode(FILE * f, FuncDefST func_st, WriteStateST ast){
+void generateWriteSTCode(FILE* f, FuncDefST func_st, WriteStateST ast){
     for(int x=0;x<ast->expr_index;x++){
         fprintf(f,"\tgetstatic java/lang/System/out Ljava/io/PrintStream;\n");
         generateExpressionSTCode(f, func_st, ast->expr_tree[x]);
         fprintf(f,"\tinvokevirtual java/io/PrintStream/print(Ljava/lang/String;)V\n");
     }
 }
-void generateNewlineSTCode(FILE * f, FuncDefST func_st, NewlineStateST ast){
+void generateNewlineSTCode(FILE* f, FuncDefST func_st, NewlineStateST ast){
   fprintf(f,"\tgetstatic java/lang/System/out Ljava/io/PrintStream;\n");
   fprintf(f,"\tldc \"\\n\"\n");
   fprintf(f,"\tinvokevirtual java/io/PrintStream.println(Ljava/lang/String;)V\n");

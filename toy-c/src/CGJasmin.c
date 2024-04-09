@@ -39,28 +39,8 @@ void generateConstructor(FILE *f){
     fprintf(f,".end method\n\n");
 }
 
-
-// void writeMethodReturn(FILE *f, ReturnStateST st){
-//      //fprintf(f,"\treturn %s",label,params); 
-//      fprintf(f,".end method");     
-// }
-
 void generateJasminCode(FILE *f, ProgramST ast){
     generateJasminDirectives(f, source_filename,output_filename);
     generateConstructor(f);
     generateProgramCode(f,ast);
 }
-
-/*
-    REMEMBER TO MAKE OutputFileWriter Struct to handle output file creation,
-    writing, and destruction in case of incomplete code generation.
-*/
-
-
-// struct FileWriter_t{
-//     FILE *output_file;
-// };
-
-// typerdef FileWriter_t *FileWriter;
-
-// FileWriter createFileWriter();
