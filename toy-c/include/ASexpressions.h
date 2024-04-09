@@ -74,4 +74,7 @@ void addFuncCallExpressionST(FuncCallST, ExpressionST);
 // void generateFuncCallSTCode(FILE *f, FuncCallST ast);
 // void generateOperatorSTCode(FILE *f, OperatorST ast);
 
+void evaluateExpressionST(ExpressionST ast);
+void evaluateExprST(ExprST ast);
+
 #endif

@@ -246,3 +246,21 @@ char *OperatorST_ToString(OperatorST ast){
 void addFuncCallExpressionST(FuncCallST ast, ExpressionST expr){
     ast->expr_tree[ast->expr_index++] = expr;
 }
+
+
+
+void evaluateExpressionST(ExpressionST ast){
+    //TO simplify code generatoin and evaluate booleans, divide by zero, etc.
+
+}
+
+void evaluateExprST(ExprST ast){
+    if(ast->op->op->lexeme = "/"){
+        if(ast->expr2->type == NUM_EXPR)
+            if(strcmp(ast->expr2->num->num->lexeme,"0")==0){
+                printf("ERROR: DIVIDING BY ZERO\n");
+                exit(0);
+            }
+    }
+
+}

@@ -164,7 +164,13 @@ void generateVarDefCode(FILE *f, VarDefST st){
 }
 
 void generateFuncDefCode(FILE *f, FuncDefST ast){
-    fprintf(f,".method public static %s(",ast->id->lexeme);
+
+
+    if(strcmp(ast->id->lexeme,"main")== 0)
+      fprintf(f,".method public static main([Ljava/lang/String;)V\n");
+    else
+      fprintf(f,".method public static %s(",ast->id->lexeme);
+
     for(int x=0;x<ast->vardef_index;x++)
     switch(getTokenType(ast->vardef_tree[x]->type)){
       case INT:
@@ -180,14 +186,20 @@ void generateFuncDefCode(FILE *f, FuncDefST ast){
           exit(0);
     }
 
-    fprintf(f,")%s\n", getTokenType(ast->type) == INT ? "I" : "C");
+    if(strcmp(ast->id->lexeme,"main") != 0)
+      fprintf(f,")%s\n", getTokenType(ast->type) == INT ? "I" : "C");
     fprintf(f,"\t.limit locals %d\n",10);     
-    fprintf(f,"\t.limit stack %d\n",10);   
+    fprintf(f,"\t.limit stack %d\n\n",10);   
 
     for(int x=0;x<ast->vardef_index;x++)
       generateVarDefCode(f,ast->vardef_tree[x]);
 
     generateBlockSTCode(f, ast, ast->block_state);
 
+
+    if(strcmp(ast->id->lexeme,"main")== 0)
+       fprintf(f,"\treturn\n");
+    else
+      fprintf(f,"\tireturn\n");
     fprintf(f,".end method\n\n");
 }

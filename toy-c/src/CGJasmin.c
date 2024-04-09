@@ -32,7 +32,7 @@ void generateMethodHeader(FILE *f,char *label,char *params){
 }
 
 void generateConstructor(FILE *f){
-    fprintf(f,".method public <init>V\n");
+    fprintf(f,".method public <init>()V\n");
     fprintf(f,"\taload_0\n");
     fprintf(f,"\tinvokenonvirtual java/lang/Object/<init>()V\n");
     fprintf(f,"\treturn\n");
