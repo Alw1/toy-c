@@ -8,7 +8,7 @@
 #include "TCtokens.h"
 #include "ASprogram.h"
 #include "ASdefinitions.h"
-#include "ASexpressions.h"
+
 #include "ASstatements.h"
 
 enum expr_prod {NUM_EXPR,ID_EXPR, CHAR_EXPR, STRING_EXPR, FUNC_CALL_EXPR, EXPR_EXPR, MINUS_EXPR, NOT_EXPR};
@@ -63,16 +63,16 @@ void addFuncCallExpressionST(FuncCallST, ExpressionST);
 
 
 // //Code Generation Functions
-// void generateExpressionSTCode(FILE *f, ExpressionST ast);
-// void generateExprSTCode(FILE *f, ExprST ast);
-// void generateNotSTCode(FILE *f, NotST ast);
-// void generateMinusSTCode(FILE *f, MinusST ast);
-// void generateNumberSTCode(FILE *f, NumberST ast);
-// void generateIdSTCode(FILE *f, IdST ast);
-// void generateCharSTCode(FILE *f, CharST ast);
-// void generateStringSTCode(FILE *f, StringST ast);
-// void generateFuncCallSTCode(FILE *f, FuncCallST ast);
-// void generateOperatorSTCode(FILE *f, OperatorST ast);
+void generateExpressionSTCode(FILE *f, FuncDefST func_st, ExpressionST ast);
+void generateExprSTCode(FILE *f, FuncDefST func_st,ExprST ast);
+void generateNotSTCode(FILE *f, FuncDefST func_st,NotST ast);
+void generateMinusSTCode(FILE *f, FuncDefST func_st,MinusST ast);
+void generateNumberSTCode(FILE *f, FuncDefST func_st,NumberST ast);
+void generateIdSTCode(FILE *f, FuncDefST func_st,IdST ast);
+void generateCharSTCode(FILE *f, FuncDefST func_st,CharST ast);
+void generateStringSTCode(FILE *f, FuncDefST func_st,StringST ast);
+void generateFuncCallSTCode(FILE *f, FuncDefST func_st,FuncCallST ast);
+void generateOperatorSTCode(FILE *f, FuncDefST func_st,OperatorST ast);
 
 void evaluateExpressionST(ExpressionST ast);
 void evaluateExprST(ExprST ast);

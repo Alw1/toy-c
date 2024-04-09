@@ -135,14 +135,16 @@ void printFuncSymTable(FuncDefST ast){
    printf("\n");
 }
 
+
+int findFuncSymbol(FuncDefST ast, char *id){
+     return findSymbol(ast->sym_table, id);
+}
+
 char *getVarDef_ID(VarDefST st){
     return toString_ID(st->id);
 }
 
 void generateDefinitionCode(FILE *f, DefinitionST st){
-
-  //printf("%s",DefinitionST_ToString(st));
-
   switch(st->def_type){
     case VarDef:
       generateVarDefCode(f,st->VarDef_tree);
@@ -172,7 +174,7 @@ void generateFuncDefCode(FILE *f, FuncDefST ast){
       fprintf(f,".method public static %s(",ast->id->lexeme);
 
     for(int x=0;x<ast->vardef_index;x++)
-    
+
     switch(getTokenType(ast->vardef_tree[x]->type)){
       case INT:
            fprintf(f,"%s","I");
@@ -189,6 +191,7 @@ void generateFuncDefCode(FILE *f, FuncDefST ast){
 
     if(strcmp(ast->id->lexeme,"main") != 0)
       fprintf(f,")%s\n", getTokenType(ast->type) == INT ? "I" : "C");
+    
     fprintf(f,"\t.limit locals %d\n",10);     
     fprintf(f,"\t.limit stack %d\n\n",10);   
 

@@ -398,7 +398,7 @@ void checkReturnSTSemantics(FuncDefST func_st, ReturnStateST ast){
 
 void generateStatementSTCode(FILE *f, FuncDefST func_st, StatementST ast){
       switch(ast->type) {
-        case EXPR_STATE: generateExpressionSTCode(f, func_st, ast->expr_tree); break;
+        case EXPR_STATE: generateExpressionStateSTCode(f, func_st, ast->expr_tree); break;
         case BREAK_STATE: generateBreakSTCode(f, func_st, ast->break_tree); break;
         case BLOCK_STATE: generateBlockSTCode(f, func_st, ast->block_tree); break;
         case IF_STATE: generateIFSTCode(f, func_st, ast->if_tree); break;
@@ -419,12 +419,14 @@ void generateBlockSTCode(FILE *f, FuncDefST func_st, BlockStateST ast){
       generateStatementSTCode(f, func_st, ast->statement_tree[x]);
 }
 
-void generateExpressionSTCode(FILE *f, FuncDefST func_st, ExpressionStateST ast){
-  
-}
-
 
 // // //Code Generation Functions
+
+void generateExpressionStateSTCode(FILE *f,FuncDefST func_st,ExpressionStateST ast){
+    printf("HERE\n");
+    generateExpressionSTCode(f,func_st,ast->expr);
+
+}
 void generateBreakSTCode(FILE * f, FuncDefST func_st, BreakStateST ast){
     //Don't need to implement, look at last
 }

@@ -71,7 +71,7 @@ void addFuncSymbols(SymTable st, BlockStateST ast);
 
 // //Code Generation Functions
 void generateStatementSTCode(FILE *f, FuncDefST func_st, StatementST ast);
-void generateExpressionSTCode(FILE *f, FuncDefST func_st, ExpressionStateST ast);
+void generateExpressionStateSTCode(FILE *f,FuncDefST func_st,ExpressionStateST ast);
 void generateBlockSTCode(FILE *f, FuncDefST func_st, BlockStateST ast);
 void generateBreakSTCode(FILE * f, FuncDefST func_st, BreakStateST ast);
 void generateIFSTCode(FILE * f, FuncDefST func_st, IfStateST ast);

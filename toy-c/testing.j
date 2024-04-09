@@ -19,6 +19,11 @@
 	getstatic java/lang/System/out Ljava/io/PrintStream;
 	ldc "\n"
 	invokevirtual java/io/PrintStream.println(Ljava/lang/String;)V
+	bipush 1
+	bipush 2
+	bipush 3
+	ldc "HELLO"
+	load some shit here later 0
 	return
 .end method
 

@@ -261,7 +261,7 @@ void addFuncCallExpressionST(FuncCallST ast, ExpressionST expr){
 
 
 
-void generateExpressionSTCode(FILE *f, FuncDefST func_st, ExpressionStateST ast){
+void generateExpressionSTCode(FILE *f, FuncDefST func_st, ExpressionST ast){
     switch(ast->type){
         case NUM_EXPR: return generateNumberSTCode(f,func_st, ast->num); break;
         case ID_EXPR:  return generateIdSTCode(f, func_st, ast->id); break;
@@ -279,9 +279,82 @@ void generateExpressionSTCode(FILE *f, FuncDefST func_st, ExpressionStateST ast)
    
 }
 
-void evaluateExpressionST(ExpressionST ast){
-    //TO simplify code generation and evaluate booleans, divide by zero, etc.
 
+void generateNumberSTCode(FILE *f, FuncDefST func_st, NumberST ast){
+    fprintf(f,"\tbipush %s\n", ast->num->lexeme);
+}
+
+void generateIdSTCode(FILE *f, FuncDefST func_st, IdST ast){
+    int offset = findFuncSymbol(func_st, ast->id->lexeme);
+    if(offset == -1)
+    {
+        printf("[ERROR] identifier %s undeclared\n", ast->id->lexeme);
+        exit(0);
+    }
+
+    fprintf(f,"\tload some shit here later %d\n",offset);
+}
+void generateCharSTCode(FILE *f, FuncDefST func_st, CharST ast){
+    //Not generating char code yet, finish later
+}
+
+void generateStringSTCode(FILE *f, FuncDefST func_st, StringST ast){
+    fprintf(f,"\tldc %s\n",ast->str->lexeme);
+}
+void generateFuncCallSTCode(FILE *f, FuncDefST func_st, FuncCallST ast){
+
+}
+
+void generateExprSTCode(FILE *f, FuncDefST func_st, ExprST ast){
+
+    //Variable Assignment
+    if(ast->expr1->type == ID_EXPR && getTokenType(ast->op->op) == ASSIGNOP){
+
+       generateExpressionSTCode(f, func_st, ast->expr2);
+       fprintf(f,"istore_%d",findFuncSymbol(func_st,ast->expr1->id->id->lexeme));
+    }
+
+    //Boolean Expression Evaluation (< <= > >= == !=)
+    // if(strcmp(ast->op->op->lexeme, "<" == 0){
+
+    // }
+    // else if(strcmp(ast->op->op->lexeme, "<=" == 0){
+        
+    // }
+    // else if(strcmp(ast->op->op->lexeme, ">" == 0){
+        
+    // }
+    // else if(strcmp(ast->op->op->lexeme, ">=" == 0){
+        
+    // }
+    // else if(strcmp(ast->op->op->lexeme, "==" == 0){
+        
+    // }
+    //  else if(strcmp(ast->op->op->lexeme, "!=" == 0){
+        
+    // }
+
+
+    //Arithmetic Expression Evaluation (+ - * / % || &&)
+    // if(strcmp(ast->op->op->lexeme, "+" == 0){
+        
+    // }
+    //  else if(strcmp(ast->op->op->lexeme, "-" == 0){
+        
+    // }
+    //  else if(strcmp(ast->op->op->lexeme, "*" == 0){
+        
+    // }
+    // else if(strcmp(ast->op->op->lexeme, "/" == 0){
+        
+    // }
+
+
+}
+void generateMinusSTCode(FILE *f, FuncDefST func_st, MinusST ast){
+
+}
+void generateNotSTCode(FILE *f, FuncDefST func_st, NotST ast){
 
 }
 
