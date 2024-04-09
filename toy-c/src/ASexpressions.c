@@ -248,14 +248,45 @@ void addFuncCallExpressionST(FuncCallST ast, ExpressionST expr){
 }
 
 
+// void generateExpressionSTCode(FILE *f, ExpressionST ast);
+// void generateExprSTCode(FILE *f, ExprST ast);
+// void generateNotSTCode(FILE *f, NotST ast);
+// void generateMinusSTCode(FILE *f, MinusST ast);
+// void generateNumberSTCode(FILE *f, NumberST ast);
+// void generateIdSTCode(FILE *f, IdST ast);
+// void generateCharSTCode(FILE *f, CharST ast);
+// void generateStringSTCode(FILE *f, StringST ast);
+// void generateFuncCallSTCode(FILE *f, FuncCallST ast);
+// void generateOperatorSTCode(FILE *f, OperatorST ast);
+
+
+
+void generateExpressionSTCode(FILE *f, FuncDefST func_st, ExpressionStateST ast){
+    switch(ast->type){
+        case NUM_EXPR: return generateNumberSTCode(f,func_st, ast->num); break;
+        case ID_EXPR:  return generateIdSTCode(f, func_st, ast->id); break;
+        case CHAR_EXPR: return generateCharSTCode(f, func_st, ast->chr); break;
+        case STRING_EXPR: return generateStringSTCode(f, func_st, ast->str); break;
+        case FUNC_CALL_EXPR: return generateFuncCallSTCode(f, func_st, ast->func_call); break;
+        case EXPR_EXPR: return generateExprSTCode(f, func_st, ast->expr_tree); break;
+        case MINUS_EXPR: return generateMinusSTCode(f, func_st, ast->minus_tree); break;
+        case NOT_EXPR: return generateNotSTCode(f, func_st, ast->not_tree); break;
+        default:
+        printf("INTERNAL ERROR IN ExpressionST_ToString()\n");
+        exit(0);
+    }    
+
+   
+}
 
 void evaluateExpressionST(ExpressionST ast){
-    //TO simplify code generatoin and evaluate booleans, divide by zero, etc.
+    //TO simplify code generation and evaluate booleans, divide by zero, etc.
+
 
 }
 
 void evaluateExprST(ExprST ast){
-    if(ast->op->op->lexeme = "/"){
+    if(strcmp(ast->op->op->lexeme,"/") == 0){
         if(ast->expr2->type == NUM_EXPR)
             if(strcmp(ast->expr2->num->num->lexeme,"0")==0){
                 printf("ERROR: DIVIDING BY ZERO\n");

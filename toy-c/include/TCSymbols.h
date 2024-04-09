@@ -15,7 +15,7 @@ SymTable createSymTable();
 void addSymbol(SymTable st, Symbol s);
 Symbol getSymbol(SymTable st,int index);
 
-bool findSymbol(SymTable st, char *id);
+int findSymbol(SymTable st, char *id);
 
 void printSymbol(Symbol s);
 void printSymTable(SymTable st);

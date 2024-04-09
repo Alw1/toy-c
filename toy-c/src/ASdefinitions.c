@@ -172,6 +172,7 @@ void generateFuncDefCode(FILE *f, FuncDefST ast){
       fprintf(f,".method public static %s(",ast->id->lexeme);
 
     for(int x=0;x<ast->vardef_index;x++)
+    
     switch(getTokenType(ast->vardef_tree[x]->type)){
       case INT:
            fprintf(f,"%s","I");

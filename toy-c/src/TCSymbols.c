@@ -60,7 +60,7 @@ void addSymbol(SymTable st, Symbol s){
         exit(0);
     }
 
-    if(findSymbol(st,s->id)){
+    if(findSymbol(st,s->id) != -1){
         switch(s->type){
             case VAR:
                 printf("Error: Variable %s already defined\n",s->id);
@@ -85,11 +85,11 @@ Symbol getSymbol(SymTable st,int index){
     return st->arr[index-1];
 }
 
-bool findSymbol(SymTable st, char *id){
+int findSymbol(SymTable st, char *id){
     for(int x=0;x<st->size;x++){
         if(strcmp(st->arr[x]->id,id) == 0)
-            return true;
+            return x;
     }
-    return false;
+    return -1;
 }
 

@@ -388,6 +388,10 @@ void addFuncSymbols(SymTable st, BlockStateST ast){
 void checkReturnSTSemantics(FuncDefST func_st, ReturnStateST ast){
     printf("SEMANTIC CHECK RETURN\n");
 
+    if(ast->expr_tree == NULL){
+      printf("ERROR: no return value in non-void function\n");
+      exit(0);
+    }
     exit(0);
 }
 
@@ -446,7 +450,7 @@ void generateWriteSTCode(FILE * f, FuncDefST func_st, WriteStateST ast){
 }
 void generateNewlineSTCode(FILE * f, FuncDefST func_st, NewlineStateST ast){
   fprintf(f,"\tgetstatic java/lang/System/out Ljava/io/PrintStream;\n");
-  fprintf(f,"\tldc \"\\n\"\n"); //Might fuck up, check later
+  fprintf(f,"\tldc \"\\n\"\n");
   fprintf(f,"\tinvokevirtual java/io/PrintStream.println(Ljava/lang/String;)V\n");
 }
 

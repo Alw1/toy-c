@@ -1,5 +1,5 @@
 .source tests/parsing/parse.tc
-.class  public 
+.class  public test
 .super  java/lang/Object
 
 
@@ -10,9 +10,12 @@
 .end method
 
 .method public static main([Ljava/lang/String;)V
-I	.limit locals 10
+	.limit locals 10
 	.limit stack 10
 
+	getstatic java/lang/System/out Ljava/io/PrintStream;
+	ldc "\n"
+	invokevirtual java/io/PrintStream.println(Ljava/lang/String;)V
 	getstatic java/lang/System/out Ljava/io/PrintStream;
 	ldc "\n"
 	invokevirtual java/io/PrintStream.println(Ljava/lang/String;)V
