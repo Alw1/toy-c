@@ -166,8 +166,6 @@ void generateVarDefCode(FILE *f, VarDefST st){
 }
 
 void generateFuncDefCode(FILE *f, FuncDefST ast){
-
-
     if(strcmp(ast->id->lexeme,"main")== 0)
       fprintf(f,".method public static main([Ljava/lang/String;)V\n");
     else
@@ -193,13 +191,18 @@ void generateFuncDefCode(FILE *f, FuncDefST ast){
       fprintf(f,")%s\n", getTokenType(ast->type) == INT ? "I" : "C");
 
     fprintf(f,"\t.limit locals %d\n",10);     
-    fprintf(f,"\t.limit stack %d\n\n",10);   
+    fprintf(f,"\t.limit stack %d\n",10);   
+
+    fprintf(f,"\n\tnew java/util/Scanner\n");
+    fprintf(f,"\tdup\n");
+    fprintf(f,"\tgetstatic java/lang/System/in Ljava/io/InputStream;\n");
+    fprintf(f,"\tinvokespecial java/util/Scanner/<init>(Ljava/io/InputStream;)V\n");
+    fprintf(f,"\tastore_1\n\n");
 
     for(int x=0;x<ast->vardef_index;x++)
       generateVarDefCode(f,ast->vardef_tree[x]); //Useless
 
     generateBlockSTCode(f, ast, ast->block_state);
-
 
     if(strcmp(ast->id->lexeme,"main")== 0)
        fprintf(f,"\treturn\n");

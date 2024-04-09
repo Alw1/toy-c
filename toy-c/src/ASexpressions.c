@@ -247,20 +247,6 @@ void addFuncCallExpressionST(FuncCallST ast, ExpressionST expr){
     ast->expr_tree[ast->expr_index++] = expr;
 }
 
-
-// void generateExpressionSTCode(FILE *f, ExpressionST ast);
-// void generateExprSTCode(FILE *f, ExprST ast);
-// void generateNotSTCode(FILE *f, NotST ast);
-// void generateMinusSTCode(FILE *f, MinusST ast);
-// void generateNumberSTCode(FILE *f, NumberST ast);
-// void generateIdSTCode(FILE *f, IdST ast);
-// void generateCharSTCode(FILE *f, CharST ast);
-// void generateStringSTCode(FILE *f, StringST ast);
-// void generateFuncCallSTCode(FILE *f, FuncCallST ast);
-// void generateOperatorSTCode(FILE *f, OperatorST ast);
-
-
-
 void generateExpressionSTCode(FILE *f, FuncDefST func_st, ExpressionST ast){
     switch(ast->type){
         case NUM_EXPR: return generateNumberSTCode(f,func_st, ast->num); break;

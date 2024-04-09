@@ -2,8 +2,15 @@ int main(){
     int a;
     int b;
     a = 0;
-    b = 1;
-    a = (a < b);
+ 
+    while(a != 10)
+    {
+        write("X");
+
+        a = a + 1;
+    }
+    newline;
+  
 }
 
 

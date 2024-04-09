@@ -321,69 +321,7 @@ void addBlockStateStatementST(BlockStateST ast, StatementST statement){
 void addFuncSymbols(SymTable st, BlockStateST ast){
   for(int x=0;x<ast->vardef_index;x++)
       addSymbol(st, createSymbol(VAR,getVarDef_ID(ast->vardef_tree[x])));
-  
-  //addStatementsymbols here
-  // for(int x=0;x<ast->statement_index;x++){
-  //   switch(ast->statement_tree[x]->type) {
-  //     case EXPR_STATE: return ExpressionStateST_ToString(ast->expr_tree); 
-  //     case B1REAK_STATE:  return BreakStateST_ToString(ast->break_tree); 
-  //     case BLOCK_STATE:  return BlockStateST_ToString(ast->block_tree); 
-  //     case IF_STATE: return  IfStateST_ToString(ast->if_tree);
-  //     case NULL_STATE:  return NullStateST_ToString(ast->null_tree);
-  //     case RETURN_STATE: return ReturnStateST_ToString(ast->return_tree);
-  //     case WHILE_STATE: return WhileStateST_ToString(ast->while_tree);
-  //     case READ_STATE: return ReadStateST_ToString(ast->read_tree);
-  //     case WRITE_STATE: return WriteStateST_ToString(ast->write_tree);
-  //     case NEWLINE_STATE: return NewlineStateST_ToString(ast->newline_tree);
-  //   default:
-  //     printf("INTERNAL ERROR IN StatementST_ToString()\n");
-  //     exit(EXIT_FAILURE);
-  //   }
-  // }
-  //   addStatementSymbol(SymTable st, StatementST ast->statement_tree[x]);
 }
-
-
-// void checkBlockStateSemantics(BlockStateST ast){
-//   for(int x=0;x<ast->statement_index;x++){
-//     switch(ast->statement_tree[x]->type) {
-//       case EXPR_STATE: return checkExpressionSTSemantics(ast->expr_tree); 
-//       case BREAK_STATE:  return checkBreakStateSTSemantics(ast->break_tree); 
-//       case BLOCK_STATE:  return checkBlockSTSemantics(ast->block_tree); 
-//       case IF_STATE: return  checkIFSTSemantics(ast->if_tree);
-//       case NULL_STATE:  return checkNullSTSemantics(ast->null_tree);
-//       case RETURN_STATE: return checkReturnSTSemantics(ast->return_tree);
-//       case WHILE_STATE: return checkWhileSTSemantics(ast->while_tree);
-//       case READ_STATE: return checkReadSTSemantics(ast->read_tree);
-//       case WRITE_STATE: return checkWriteSTSemantics(ast->write_tree);
-//       case NEWLINE_STATE: return checkNewlineSTSemantics(ast->newline_tree);
-//     default:
-//       printf("INTERNAL ERROR IN checkBlockSTSemantics()\n");
-//       exit(EXIT_FAILURE);
-//     }
-//   }
-//    // addStatementSymbol(SymTable st, StatementST ast->statement_tree[x]);
-// }
-
-// //Code Generation Functions
-// char *generateBreakSTCode(FuncDefST func_st, BreakStateST ast);
-// char *generateIFSTCode(FuncDefST func_st, IfStateST ast);
-// char *generateNullSTCode(FuncDefST func_st, NullStateST ast);
-// char *generateReturnSTCode(FuncDefST func_st, ReturnStateST ast);
-// char *generateWhileSTCode(FuncDefST func_st, WhileStateST ast);
-// char *generateReadSTCode(FuncDefST func_st, ReadStateST ast);
-// char *generateWriteSTCode(FuncDefST func_st, WriteStateST ast);
-// char *generateNewlineSTCode(FuncDefST func_st, NewlineStateST ast);
-
-// //Semantic Check Functions
-// void checkBreakSTSemantics(FuncDefST func_st, BreakStateST ast); 
-// void checkIFSTSemantics(FuncDefST func_st, IfStateST ast);
-// void checkNullSTSemantics(FuncDefST func_st, NullStateST ast);
-// void checkReturnSTSemantics(FuncDefST func_st, ReturnStateST ast); //Return type must match func type
-// void checkWhileSTSemantics(FuncDefST func_st, WhileStateST ast);
-// void checkReadSTSemantics(FuncDefST func_st, ReadStateST ast);
-// void checkWriteSTSemantics(FuncDefST func_st, WriteStateST ast);
-// void checkNewlineSTSemantics(FuncDefST func_st, NewlineStateST ast);
 
 void checkReturnSTSemantics(FuncDefST func_st, ReturnStateST ast){
     printf("SEMANTIC CHECK RETURN\n");
@@ -423,32 +361,64 @@ void generateBlockSTCode(FILE *f, FuncDefST func_st, BlockStateST ast){
 // // //Code Generation Functions
 
 void generateExpressionStateSTCode(FILE *f,FuncDefST func_st,ExpressionStateST ast){
-    printf("HERE\n");
     generateExpressionSTCode(f,func_st,ast->expr);
-
 }
 void generateBreakSTCode(FILE * f, FuncDefST func_st, BreakStateST ast){
     //Don't need to implement, look at last
+    fprintf("\tgoto break\n");
+    /*
+      Idea: make a break label at each scope, and call this funciton when break is met,
+      it should jump out of the current scope only
+    */
 }
+
 void generateIFSTCode(FILE * f, FuncDefST func_st, IfStateST ast){
-  
+    generateExpressionSTCode(f,func_st,ast->expr_tree);
+    fprintf(f,"\ticonst_0\n");
+    fprintf(f,"\tif_icmpne else_label\n");
+    generateStatementSTCode(f,func_st,ast->if_tree);
+    fprintf(f,"\tgoto end_if\n");
+    fprintf(f,"else_label:\n");
+    generateStatementSTCode(f,func_st,ast->else_tree);
+    fprintf(f,"end_if:\n");
+
+    fprintf("\tbreak:\n");
 }
+
 void generateNullSTCode(FILE * f, FuncDefST func_st, NullStateST ast){
     //Useless, dont worry about this
 }
+
 void generateReturnSTCode(FILE * f, FuncDefST func_st, ReturnStateST ast){
     //Have semantic check to make sure return type matches the func type
-    checkReturnSTSemantics(func_st, ast);
-
+    //use int conversion to test if return type is correct
+    //printf("\tireturn\n");
+    printf("\tireturn\n");
 }
+
+//Not working yet
 void generateWhileSTCode(FILE * f, FuncDefST func_st, WhileStateST ast){
-
+    generateExpressionSTCode(f, func_st,ast->expr_tree);
+    fprintf(f,"loop:\n");
+    fprintf(f,"\ticonst_0\n");
+    fprintf(f,"\tif_icmpne end_loop\n");
+    generateStatementSTCode(f,func_st,ast->statement_tree);
+    fprintf(f,"loop:\n");
+    fprintf(f,"end_loop:\n");
+    fprintf("\tbreak:\n");
 }
+
+
 void generateReadSTCode(FILE * f, FuncDefST func_st, ReadStateST ast){
-
+    fprintf(f,"\tgetstatic #9 <Field System.in:InputStream>\n");
 }
-void generateWriteSTCode(FILE * f, FuncDefST func_st, WriteStateST ast){
 
+void generateWriteSTCode(FILE * f, FuncDefST func_st, WriteStateST ast){
+    for(int x=0;x<ast->expr_index;x++){
+        fprintf(f,"\tgetstatic java/lang/System/out Ljava/io/PrintStream;\n");
+        generateExpressionSTCode(f, func_st, ast->expr_tree[x]);
+        fprintf(f,"\tinvokevirtual java/io/PrintStream/print(Ljava/lang/String;)V\n");
+    }
 }
 void generateNewlineSTCode(FILE * f, FuncDefST func_st, NewlineStateST ast){
   fprintf(f,"\tgetstatic java/lang/System/out Ljava/io/PrintStream;\n");
