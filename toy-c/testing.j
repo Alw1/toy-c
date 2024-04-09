@@ -50,11 +50,40 @@ label_1:
 	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
 	getstatic java/lang/System/out Ljava/io/PrintStream;
 	ldc "\n"
-	invokevirtual java/io/PrintStream.println(Ljava/lang/String;)V
+	invokevirtual java/io/PrintStream.print(Ljava/lang/String;)V
 	goto end_if
 else_label:
 end_if:
 	break:
 	return
+.end method
+
+.method public static x()I
+	.limit locals 10
+	.limit stack 10
+
+	new java/util/Scanner
+	dup
+	getstatic java/lang/System/in Ljava/io/InputStream;
+	invokespecial java/util/Scanner/<init>(Ljava/io/InputStream;)V
+	astore_1
+
+	getstatic java/lang/System/out Ljava/io/PrintStream;
+	ldc "WORKS?"
+	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
+	getstatic java/lang/System/out Ljava/io/PrintStream;
+	ldc "WORKS?"
+	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
+	getstatic java/lang/System/out Ljava/io/PrintStream;
+	ldc "WORKS?"
+	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
+	getstatic java/lang/System/out Ljava/io/PrintStream;
+	ldc "WORKS?"
+	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
+	getstatic java/lang/System/out Ljava/io/PrintStream;
+	ldc "WORKS?"
+	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
+	ireturn
+	ireturn
 .end method
 

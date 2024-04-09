@@ -353,31 +353,20 @@ void generateStatementSTCode(FILE *f, FuncDefST func_st, StatementST ast){
 }
 
 void generateBlockSTCode(FILE *f, FuncDefST func_st, BlockStateST ast){
-    for(int x=0;x<ast->statement_index;x++)
+    for(int x=0;x<ast->statement_index;x++){
       generateStatementSTCode(f, func_st, ast->statement_tree[x]);
+    }
 }
-
-//Code Generation Functions
 
 void generateExpressionStateSTCode(FILE *f,FuncDefST func_st,ExpressionStateST ast){
     generateExpressionSTCode(f,func_st,ast->expr);
 }
 
 void generateBreakSTCode(FILE * f, FuncDefST func_st, BreakStateST ast){
-    //Don't need to implement, look at last
     fprintf(f,"\tgoto break\n");
-    /*
-      Idea: make a break label at each scope, and call this funciton when break is met,
-      it should jump out of the current scope only
-    */
 }
 
 void generateIFSTCode(FILE *f, FuncDefST func_st, IfStateST ast){
-    /*
-        Note: segfaults for some reason, fix later
-    */
-    
-
     generateExpressionSTCode(f,func_st,ast->expr_tree);
     fprintf(f,"\ticonst_0\n");
     fprintf(f,"\tif_icmpne else_label\n");
@@ -398,8 +387,18 @@ void generateReturnSTCode(FILE* f, FuncDefST func_st, ReturnStateST ast){
     //Have semantic check to make sure return type matches the func type
     //use int conversion to test if return type is correct
     //printf("\tireturn\n");
-   // fprintf(f,"\tireturn\n");
+
+    //Add bool to fundef struct to determine if function has a return statememnt 
+    //by reaching this func
+
+    if(ast->expr_tree == NULL){
+        printf("ERROR: control reaches end of non-void function\n");
+        exit(0);
+    }
+
+    fprintf(f,"\tireturn\n");
 }
+
 
 //Not working yet
 void generateWhileSTCode(FILE* f, FuncDefST func_st, WhileStateST ast){
@@ -407,7 +406,8 @@ void generateWhileSTCode(FILE* f, FuncDefST func_st, WhileStateST ast){
     fprintf(f,"loop:\n");
     fprintf(f,"\ticonst_0\n");
     fprintf(f,"\tif_icmpne end_loop\n");
-    generateStatementSTCode(f,func_st,ast->statement_tree);
+    if(ast->statement_tree != NULL)
+      generateStatementSTCode(f,func_st,ast->statement_tree);
     fprintf(f,"loop:\n");
     fprintf(f,"end_loop:\n");
     fprintf(f,"\tbreak:\n");
@@ -428,7 +428,7 @@ void generateWriteSTCode(FILE* f, FuncDefST func_st, WriteStateST ast){
 void generateNewlineSTCode(FILE* f, FuncDefST func_st, NewlineStateST ast){
   fprintf(f,"\tgetstatic java/lang/System/out Ljava/io/PrintStream;\n");
   fprintf(f,"\tldc \"\\n\"\n");
-  fprintf(f,"\tinvokevirtual java/io/PrintStream.println(Ljava/lang/String;)V\n");
+  fprintf(f,"\tinvokevirtual java/io/PrintStream.print(Ljava/lang/String;)V\n");
 }
 
 
