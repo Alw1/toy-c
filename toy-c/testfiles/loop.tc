@@ -1,0 +1,13 @@
+int main(){
+
+
+    int x;
+    x = 10;
+
+    while(0 == 0){
+        write("Test\n");
+        //x = x - 1;
+    }
+
+
+}

@@ -319,14 +319,13 @@ void generateStringSTCode(FILE *f, FuncDefST func_st, StringST ast){
     fprintf(f,"\tldc %s\n",ast->str->lexeme);
 }
 void generateFuncCallSTCode(FILE *f, FuncDefST func_st, FuncCallST ast){
-
-    
+    //NEEDS A CHECK FOR WHEN INPUTS DONT MATCH THE DEFINITION
     for(int x=0;x<ast->expr_index;x++){
         generateExpressionSTCode(f,func_st,ast->expr_tree[x]);
     }
 
     fprintf(f,"\tinvokestatic %s/%s(",class_filename,ast->id->id->lexeme);
-    for(int x=0;x<ast->expr_index+1;x++){
+    for(int x=0;x<ast->expr_index;x++){
         fprintf(f,"I");
     }
      fprintf(f,")I\n");

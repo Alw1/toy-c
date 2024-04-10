@@ -207,8 +207,9 @@ void generateFuncDefCode(FILE *f, FuncDefST ast){
 
     generateBlockSTCode(f, ast, ast->block_state);
 
-    if(strcmp(ast->id->lexeme,"main")== 0)
-       fprintf(f,"\treturn\n");
-
     fprintf(f,".end method\n\n");
+}
+
+int isMainFunction(FuncDefST ast){
+  return strcmp(ast->id->lexeme, "main");
 }

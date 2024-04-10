@@ -381,7 +381,11 @@ void generateReturnSTCode(FILE* f, FuncDefST func_st, ReturnStateST ast){
 
     //Checks if returned expression evaluates to an integer before generating code
     generateReturnExpressionSTCode(f,func_st,ast->expr_tree);
-    fprintf(f,"\tireturn\n");
+
+    if(isMainFunction(func_st) == 0)
+       fprintf(f,"\treturn\n");
+    else 
+      fprintf(f,"\tireturn\n");
 }
 
 
@@ -389,13 +393,16 @@ void generateReturnSTCode(FILE* f, FuncDefST func_st, ReturnStateST ast){
 void generateWhileSTCode(FILE* f, FuncDefST func_st, WhileStateST ast){
     generateExpressionSTCode(f, func_st,ast->expr_tree);
     fprintf(f,"loop:\n");
-    fprintf(f,"\ticonst_1\n");
+    fprintf(f,"\ticonst_0\n");
     fprintf(f,"\tif_icmpne end_loop\n");
-    if(ast->statement_tree != NULL)
+    fprintf(f,"\ticonst_0\n");
+    if(ast->statement_tree != NULL){
+      printf("HERE\n");
       generateStatementSTCode(f,func_st,ast->statement_tree);
+    }
     fprintf(f,"\tgoto loop\n");
     fprintf(f,"end_loop:\n");
-    fprintf(f,"\tbreak:\n");
+    fprintf(f,"break:\n");
 }
 
 
