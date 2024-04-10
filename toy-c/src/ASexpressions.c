@@ -7,6 +7,7 @@
 #include <string.h>
 #include "../include/pretty.h"
 #include "../include/TCtokens.h"
+#include "../include/TCglobals.h"
 #include "../include/ASprogram.h"
 #include "../include/ASexpressions.h"
 #include "../include/ASdefinitions.h"
@@ -279,6 +280,23 @@ void generateWriteExpressionSTCode(FILE *f, FuncDefST func_st, ExpressionST ast)
     }       
 }
 
+void generateReturnExpressionSTCode(FILE *f,FuncDefST func_st,ExpressionST ast){
+        switch(ast->type){
+        case NUM_EXPR:   generateNumberSTCode(f,func_st, ast->num);    break;
+        case ID_EXPR:    generateIdSTCode(f, func_st, ast->id);    break;
+        // case CHAR_EXPR:   generateCharSTCode(f, func_st, ast->chr); break;
+        // case STRING_EXPR:   generateStringSTCode(f, func_st, ast->str); break;
+        case FUNC_CALL_EXPR:   generateFuncCallSTCode(f, func_st, ast->func_call);    break;
+        case EXPR_EXPR:   generateExprSTCode(f, func_st, ast->expr_tree);    break;
+        case MINUS_EXPR:   generateMinusSTCode(f, func_st, ast->minus_tree);    break;
+        case NOT_EXPR:   generateNotSTCode(f, func_st, ast->not_tree);    break;
+        default:
+        printf("ERROR: Return type does not match the returned value\n");
+        exit(0);
+    }       
+
+}
+
 void generateNumberSTCode(FILE *f, FuncDefST func_st, NumberST ast){
     fprintf(f,"\tbipush %s\n", ast->num->lexeme);
 }
@@ -302,6 +320,16 @@ void generateStringSTCode(FILE *f, FuncDefST func_st, StringST ast){
 }
 void generateFuncCallSTCode(FILE *f, FuncDefST func_st, FuncCallST ast){
 
+    
+    for(int x=0;x<ast->expr_index;x++){
+        generateExpressionSTCode(f,func_st,ast->expr_tree[x]);
+    }
+
+    fprintf(f,"\tinvokestatic %s/%s(",class_filename,ast->id->id->lexeme);
+    for(int x=0;x<ast->expr_index+1;x++){
+        fprintf(f,"I");
+    }
+     fprintf(f,")I\n");
 }
 
 void generateExprSTCode(FILE *f, FuncDefST func_st, ExprST ast){

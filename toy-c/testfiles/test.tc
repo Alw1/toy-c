@@ -5,13 +5,13 @@ int main(int x){
     a = 1; 
     b = 2;
 
+    a = x(1);
+}
 
-    if(a>b){
-    write((a*b*b));
-    }
-    else{
-        write("BROKE","WOKE","CHOKE", 1, 2, 3, (5*9), a);
-    }
-    //write("BROKE","WOKE","CHOKE", 1, 2, 3, (5-9), not(a));
 
+int x(int x){
+    x=0;
+
+    write("IN THIS FUNCTION\n");
+    return 1;
 }

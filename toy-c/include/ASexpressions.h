@@ -65,6 +65,7 @@ void addFuncCallExpressionST(FuncCallST, ExpressionST);
 // //Code Generation Functions
 void generateExpressionSTCode(FILE *f, FuncDefST func_st, ExpressionST ast);
 void generateWriteExpressionSTCode(FILE *f, FuncDefST func_st, ExpressionST ast); //Handles typecasting for ints to string
+void generateReturnExpressionSTCode(FILE *f,FuncDefST func_st,ExpressionST ast);
 void generateExprSTCode(FILE *f, FuncDefST func_st,ExprST ast);
 void generateNotSTCode(FILE *f, FuncDefST func_st,NotST ast);
 void generateMinusSTCode(FILE *f, FuncDefST func_st,MinusST ast);

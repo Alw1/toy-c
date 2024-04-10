@@ -323,16 +323,6 @@ void addFuncSymbols(SymTable st, BlockStateST ast){
       addSymbol(st, createSymbol(VAR,getVarDef_ID(ast->vardef_tree[x])));
 }
 
-void checkReturnSTSemantics(FuncDefST func_st, ReturnStateST ast){
-    printf("SEMANTIC CHECK RETURN\n");
-
-    if(ast->expr_tree == NULL){
-      printf("ERROR: no return value in non-void function\n");
-      exit(0);
-    }
-    exit(0);
-}
-
 void generateStatementSTCode(FILE *f, FuncDefST func_st, StatementST ast){
 
       switch(ast->type) {
@@ -384,19 +374,13 @@ void generateNullSTCode(FILE *f, FuncDefST func_st, NullStateST ast){
 }
 
 void generateReturnSTCode(FILE* f, FuncDefST func_st, ReturnStateST ast){
-    //Have semantic check to make sure return type matches the func type
-    //use int conversion to test if return type is correct
-    //printf("\tireturn\n");
-
-    //Add bool to fundef struct to determine if function has a return statememnt 
-    //by reaching this func
-
-    //Maybe make generateReturnExpression funciton to handle type check?
     if(ast->expr_tree == NULL){
         printf("ERROR: control reaches end of non-void function\n");
         exit(0);
     }
 
+    //Checks if returned expression evaluates to an integer before generating code
+    generateReturnExpressionSTCode(f,func_st,ast->expr_tree);
     fprintf(f,"\tireturn\n");
 }
 
@@ -426,6 +410,7 @@ void generateWriteSTCode(FILE* f, FuncDefST func_st, WriteStateST ast){
         fprintf(f,"\tinvokevirtual java/io/PrintStream/print(Ljava/lang/String;)V\n");
     }
 }
+
 void generateNewlineSTCode(FILE* f, FuncDefST func_st, NewlineStateST ast){
   fprintf(f,"\tgetstatic java/lang/System/out Ljava/io/PrintStream;\n");
   fprintf(f,"\tldc \"\\n\"\n");

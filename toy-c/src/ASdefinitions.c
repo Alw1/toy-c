@@ -209,7 +209,6 @@ void generateFuncDefCode(FILE *f, FuncDefST ast){
 
     if(strcmp(ast->id->lexeme,"main")== 0)
        fprintf(f,"\treturn\n");
-    else
-      fprintf(f,"\tireturn\n");
+
     fprintf(f,".end method\n\n");
 }
