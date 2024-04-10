@@ -391,6 +391,7 @@ void generateReturnSTCode(FILE* f, FuncDefST func_st, ReturnStateST ast){
     //Add bool to fundef struct to determine if function has a return statememnt 
     //by reaching this func
 
+    //Maybe make generateReturnExpression funciton to handle type check?
     if(ast->expr_tree == NULL){
         printf("ERROR: control reaches end of non-void function\n");
         exit(0);
@@ -421,11 +422,7 @@ void generateReadSTCode(FILE* f, FuncDefST func_st, ReadStateST ast){
 void generateWriteSTCode(FILE* f, FuncDefST func_st, WriteStateST ast){
     for(int x=0;x<ast->expr_index;x++){
         fprintf(f,"\tgetstatic java/lang/System/out Ljava/io/PrintStream;\n");
-        //Need to check if it's an int or strign here
-
         generateWriteExpressionSTCode(f, func_st, ast->expr_tree[x]);
-
-        //generateExpressionSTCode(f, func_st, ast->expr_tree[x]);
         fprintf(f,"\tinvokevirtual java/io/PrintStream/print(Ljava/lang/String;)V\n");
     }
 }

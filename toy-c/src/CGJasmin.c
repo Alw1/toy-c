@@ -19,7 +19,6 @@
 
 
 void generateJasminDirectives(FILE *f, char *source_name,char *output_name){
-
     fprintf(f,".source %s\n",source_name); 
     fprintf(f,".class  public %s\n",output_name); 
     fprintf(f,".super  java/lang/Object\n\n\n");      

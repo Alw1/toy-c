@@ -352,10 +352,10 @@ void generateExprSTCode(FILE *f, FuncDefST func_st, ExprST ast){
                 fprintf(f,"\tiadd\n");
             }
             else if(strcmp(ast->op->op->lexeme, "-") == 0){
-                fprintf(f,"\timul\n");
+                fprintf(f,"\tisub\n");
             }
             else if(strcmp(ast->op->op->lexeme, "*") == 0){
-                fprintf(f,"\tisub\n");
+                fprintf(f,"\timul\n");
             }
             else if(strcmp(ast->op->op->lexeme, "/") == 0){
                 fprintf(f,"\tidiv\n");

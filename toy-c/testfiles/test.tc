@@ -5,6 +5,13 @@ int main(int x){
     a = 1; 
     b = 2;
 
-    write("BROKE","WOKE","CHOKE", 1, 2, 3, (5-9), a);
+
+    if(a>b){
+    write((a*b*b));
+    }
+    else{
+        write("BROKE","WOKE","CHOKE", 1, 2, 3, (5*9), a);
+    }
+    //write("BROKE","WOKE","CHOKE", 1, 2, 3, (5-9), not(a));
 
 }
