@@ -17,6 +17,7 @@
 #include "../include/ASdefinitions.h"
 #include "../include/ASstatements.h"
 #include "../include/CGJasmin.h"
+#include "../include/stdbool.h"
 
 struct DefinitionST_t {
   enum definition_prods def_type;
@@ -34,6 +35,7 @@ struct FuncDefST_t {
     VarDefST vardef_tree[1000];
     int vardef_index;
     BlockStateST block_state;
+   // bool has_return;
 };
 
 struct VarDefST_t {
@@ -62,6 +64,7 @@ FuncDefST createFuncDefST(Token type, Token id, SymTable global_st){
     ast->vardef_index = 0;
     ast->sym_table = createSymTable();
     ast->global_st = global_st;
+    //ast->has_return = false;
     return ast;
 }
 

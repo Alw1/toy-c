@@ -1,0 +1,23 @@
+
+int main(){
+    int a;
+int b;
+int c;
+
+    read(a,b,c);
+
+    write(a,b,c);
+    newline;
+
+
+    return 1;
+}
+
+
+int printshit(int x){
+
+
+    write("FUNCITON PRINT\n", x,"\n");
+
+    return 1;
+}
