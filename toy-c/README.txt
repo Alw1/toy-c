@@ -3,10 +3,8 @@ Language: C
 Build tool: make
 
 Code Generation Progress:
--Symbol Table is working, checks semantics  (x)
--Can generate jasmine code                  (x)
-
-
+-Can generate all code specified in part 3,
+including functions & function calls
 
 Instructions:
 
@@ -20,7 +18,7 @@ for run:  	type make run in the terminal from the part1 directory with the follo
 
 		  	flag options:
 				-help 		    display a usage message
-				-output <file> specifies target file name
+				-output <file> specifies target jasmine file name
 				-class <file> specifies class file name
 				-debug <level> display messages that aid in tracing the
 				compilation process. 

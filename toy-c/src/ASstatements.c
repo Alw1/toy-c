@@ -407,7 +407,17 @@ void generateWhileSTCode(FILE* f, FuncDefST func_st, WhileStateST ast){
 
 
 void generateReadSTCode(FILE* f, FuncDefST func_st, ReadStateST ast){
-    fprintf(f,"\tgetstatic #9 <Field System.in:InputStream>\n");
+  for(int x=0;x<ast->id_index;x++){
+    fprintf(f,"\taload_1\n");
+    fprintf(f,"\tinvokevirtual java/util/Scanner/nextInt()I\n");
+
+    if(findFuncSymbol(func_st,ast->ID[x]->lexeme) == -1){ 
+      printf("ERROR: Trying to read into undefined variable\n");
+      exit(0);
+    }
+
+    fprintf(f,"\tistore_%d\n",findFuncSymbol(func_st,ast->ID[x]->lexeme));
+  }
 }
 
 void generateWriteSTCode(FILE* f, FuncDefST func_st, WriteStateST ast){

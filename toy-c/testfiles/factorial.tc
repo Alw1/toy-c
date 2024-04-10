@@ -1,23 +1,14 @@
 int main()
 {
     int x;
-    x = 5;
-
-
-    write(2 * 5 * 10);
+    x = 0;
+    read(x);
+    write(x);
     newline;
-    write(10 % 2);
-     newline;
-    write(9 % 2);
-     newline;
-    write(10 - 2);
-     newline;
-    //write("Factorial\n");
-    //x = factorial(x);
-  
+   // x = factorial(5);
+
     return 0;
 }
-
 
 int factorial(int x)
 {
@@ -25,9 +16,10 @@ int factorial(int x)
     result = 1; 
     int i;
     i = 2;
-
+write(result);
     while(i<=x){
         result = result * i;
+         write(result);
         i = i + 1;
 
         write(result);
