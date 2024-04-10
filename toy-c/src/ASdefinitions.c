@@ -168,24 +168,27 @@ void generateVarDefCode(FILE *f, VarDefST st){
 void generateFuncDefCode(FILE *f, FuncDefST ast){
     if(strcmp(ast->id->lexeme,"main")== 0)
       fprintf(f,".method public static main([Ljava/lang/String;)V\n");
-    else
+    else{
       fprintf(f,".method public static %s(",ast->id->lexeme);
 
-    for(int x=0;x<ast->vardef_index;x++)
+      for(int x=0;x<ast->vardef_index;x++){
 
-    switch(getTokenType(ast->vardef_tree[x]->type)){
-      case INT:
-           fprintf(f,"%s","I");
-           break;  
-      case CHAR:
-           printf("ERROR: CHAR TYPE NOT ALLOWED\n");
-           exit(0);
-           fprintf(f,"%s","C");
-           break;
-      default:
-          printf("ERROR: UNKNOWN TYPE IN FUNCTION\n");
-          exit(0);
+        switch(getTokenType(ast->vardef_tree[x]->type)){
+          case INT:
+              fprintf(f,"%s","I");
+              break;  
+          case CHAR:
+              printf("ERROR: CHAR TYPE NOT ALLOWED\n");
+              exit(0);
+              fprintf(f,"%s","C");
+              break;
+          default:
+              printf("ERROR: UNKNOWN TYPE IN FUNCTION\n");
+              exit(0);
+        }
+      }
     }
+    
 
     if(strcmp(ast->id->lexeme,"main") != 0)
       fprintf(f,")%s\n", getTokenType(ast->type) == INT ? "I" : "C");

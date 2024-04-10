@@ -404,11 +404,11 @@ void generateReturnSTCode(FILE* f, FuncDefST func_st, ReturnStateST ast){
 void generateWhileSTCode(FILE* f, FuncDefST func_st, WhileStateST ast){
     generateExpressionSTCode(f, func_st,ast->expr_tree);
     fprintf(f,"loop:\n");
-    fprintf(f,"\ticonst_0\n");
+    fprintf(f,"\ticonst_1\n");
     fprintf(f,"\tif_icmpne end_loop\n");
     if(ast->statement_tree != NULL)
       generateStatementSTCode(f,func_st,ast->statement_tree);
-    fprintf(f,"loop:\n");
+    fprintf(f,"\tgoto loop\n");
     fprintf(f,"end_loop:\n");
     fprintf(f,"\tbreak:\n");
 }
@@ -421,7 +421,11 @@ void generateReadSTCode(FILE* f, FuncDefST func_st, ReadStateST ast){
 void generateWriteSTCode(FILE* f, FuncDefST func_st, WriteStateST ast){
     for(int x=0;x<ast->expr_index;x++){
         fprintf(f,"\tgetstatic java/lang/System/out Ljava/io/PrintStream;\n");
-        generateExpressionSTCode(f, func_st, ast->expr_tree[x]);
+        //Need to check if it's an int or strign here
+
+        generateWriteExpressionSTCode(f, func_st, ast->expr_tree[x]);
+
+        //generateExpressionSTCode(f, func_st, ast->expr_tree[x]);
         fprintf(f,"\tinvokevirtual java/io/PrintStream/print(Ljava/lang/String;)V\n");
     }
 }

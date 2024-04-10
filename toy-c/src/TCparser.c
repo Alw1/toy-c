@@ -407,8 +407,8 @@ WriteStateST WriteStatement(Scanner s){
   WriteStateST statement = createWriteStateST();
 
   match(LPAREN,s);
-  if(getTokenType(s->curr_token) == RPAREN)
-    throwParseError(s,"MISSING WRITE EXPRESSION", "Expression");
+  // if(getTokenType(s->curr_token) == RPAREN)
+  //   throwParseError(s,"MISSING WRITE EXPRESSION", "Expression");
 
   ActualParametersWriteStateST(s, statement);
   match(RPAREN,s);
@@ -430,8 +430,6 @@ void ActualParametersWriteStateST(Scanner s, WriteStateST ast){
     
   while(getTokenType(s->curr_token) == COMMA){
       match(COMMA,s);
-      if(getTokenType(s->curr_token) == RPAREN)
-        break;
       addWriteStateExpressionST(ast, Expression(s));
   }
   exiting("ActualParameters");

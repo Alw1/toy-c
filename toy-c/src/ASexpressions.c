@@ -249,14 +249,30 @@ void addFuncCallExpressionST(FuncCallST ast, ExpressionST expr){
 
 void generateExpressionSTCode(FILE *f, FuncDefST func_st, ExpressionST ast){
     switch(ast->type){
-        case NUM_EXPR: return generateNumberSTCode(f,func_st, ast->num); break;
-        case ID_EXPR:  return generateIdSTCode(f, func_st, ast->id); break;
-        case CHAR_EXPR: return generateCharSTCode(f, func_st, ast->chr); break;
-        case STRING_EXPR: return generateStringSTCode(f, func_st, ast->str); break;
-        case FUNC_CALL_EXPR: return generateFuncCallSTCode(f, func_st, ast->func_call); break;
-        case EXPR_EXPR: return generateExprSTCode(f, func_st, ast->expr_tree); break;
-        case MINUS_EXPR: return generateMinusSTCode(f, func_st, ast->minus_tree); break;
-        case NOT_EXPR: return generateNotSTCode(f, func_st, ast->not_tree); break;
+        case NUM_EXPR:   generateNumberSTCode(f,func_st, ast->num); break;
+        case ID_EXPR:    generateIdSTCode(f, func_st, ast->id); break;
+        case CHAR_EXPR:   generateCharSTCode(f, func_st, ast->chr); break;
+        case STRING_EXPR:   generateStringSTCode(f, func_st, ast->str); break;
+        case FUNC_CALL_EXPR:   generateFuncCallSTCode(f, func_st, ast->func_call); break;
+        case EXPR_EXPR:   generateExprSTCode(f, func_st, ast->expr_tree); break;
+        case MINUS_EXPR:   generateMinusSTCode(f, func_st, ast->minus_tree); break;
+        case NOT_EXPR:   generateNotSTCode(f, func_st, ast->not_tree); break;
+        default:
+        printf("INTERNAL ERROR IN ExpressionST_ToString()\n");
+        exit(0);
+    }       
+}
+
+void generateWriteExpressionSTCode(FILE *f, FuncDefST func_st, ExpressionST ast){
+    switch(ast->type){
+        case NUM_EXPR:   generateNumberSTCode(f,func_st, ast->num); fprintf(f,"\tinvokestatic java/lang/Integer/toString(I)Ljava/lang/String;\n"); break;
+        case ID_EXPR:    generateIdSTCode(f, func_st, ast->id); fprintf(f,"\tinvokestatic java/lang/Integer/toString(I)Ljava/lang/String;\n"); break;
+        case CHAR_EXPR:   generateCharSTCode(f, func_st, ast->chr); break;
+        case STRING_EXPR:   generateStringSTCode(f, func_st, ast->str); break;
+        case FUNC_CALL_EXPR:   generateFuncCallSTCode(f, func_st, ast->func_call); fprintf(f,"\tinvokestatic java/lang/Integer/toString(I)Ljava/lang/String;\n"); break;
+        case EXPR_EXPR:   generateExprSTCode(f, func_st, ast->expr_tree); fprintf(f,"\tinvokestatic java/lang/Integer/toString(I)Ljava/lang/String;\n"); break;
+        case MINUS_EXPR:   generateMinusSTCode(f, func_st, ast->minus_tree); fprintf(f,"\tinvokestatic java/lang/Integer/toString(I)Ljava/lang/String;\n"); break;
+        case NOT_EXPR:   generateNotSTCode(f, func_st, ast->not_tree); fprintf(f,"\tinvokestatic java/lang/Integer/toString(I)Ljava/lang/String;\n"); break;
         default:
         printf("INTERNAL ERROR IN ExpressionST_ToString()\n");
         exit(0);

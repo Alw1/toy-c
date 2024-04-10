@@ -1,0 +1,10 @@
+int main(int x){
+    int a;
+    int b;
+    x = 0;
+    a = 1; 
+    b = 2;
+
+    write("BROKE","WOKE","CHOKE", 1, 2, 3, (5-9), a);
+
+}
