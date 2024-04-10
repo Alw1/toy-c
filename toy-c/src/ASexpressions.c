@@ -290,9 +290,6 @@ void generateFuncCallSTCode(FILE *f, FuncDefST func_st, FuncCallST ast){
 
 void generateExprSTCode(FILE *f, FuncDefST func_st, ExprST ast){
 
-    //Need to load the results of expr1 & expr2 here somehow
-    //NVM JUST DO IT NOW IT SHOULD WORK
-
     if(getTokenType(ast->op->op) != ASSIGNOP){
         generateExpressionSTCode(f, func_st, ast->expr1);
         generateExpressionSTCode(f, func_st, ast->expr2);
@@ -369,7 +366,11 @@ void generateMinusSTCode(FILE *f, FuncDefST func_st, MinusST ast){
 }
 
 void generateNotSTCode(FILE *f, FuncDefST func_st, NotST ast){
-
+    generateExpressionSTCode(f, func_st, ast->expr);
+    fprintf(f,"\ticonst_0\n");
+    fprintf(f,"\tif_cmpneq switch:\n");
+    fprintf(f,"\ticonst_1:\n");
+    fprintf(f,"switch:\n");
 }
 
 void evaluateExprST(ExprST ast){
