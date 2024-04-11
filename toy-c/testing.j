@@ -20,19 +20,15 @@
 	astore_1
 
 	bipush 0
-	istore_3
-	bipush 9
 	istore 4
-	bipush 5
+	bipush 9
 	istore 5
+	bipush 5
+	istore 6
 	aload_1
 	invokevirtual java/util/Scanner/nextInt()I
-	istore 4
+	istore 5
 	getstatic java/lang/System/out Ljava/io/PrintStream;
-	iload 4
+	iload 5
 	invokestatic java/lang/Integer/toString(I)Ljava/lang/String;
 	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
-	bipush 1
-	return
-.end method
-

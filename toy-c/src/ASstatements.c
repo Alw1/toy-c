@@ -375,8 +375,6 @@ void generateNullSTCode(FILE *f, FuncDefST func_st, NullStateST ast){
 
 void generateReturnSTCode(FILE* f, FuncDefST func_st, ReturnStateST ast){
 
-    //func_st->has_return = 1; //For error checking
-
     setFuncReturn(func_st);
     if(ast->expr_tree == NULL){
         printf("ERROR: control reaches end of non-void function\n");
@@ -390,7 +388,6 @@ void generateReturnSTCode(FILE* f, FuncDefST func_st, ReturnStateST ast){
        fprintf(f,"\treturn\n");
     else 
       fprintf(f,"\tireturn\n");
-    
 }
 
 void generateWhileSTCode(FILE* f, FuncDefST func_st, WhileStateST ast){
@@ -423,8 +420,6 @@ void generateReadSTCode(FILE* f, FuncDefST func_st, ReadStateST ast){
           fprintf(f,"\tistore_%d\n",findFunctionSymbol(func_st,ast->ID[x]->lexeme));
     else 
         fprintf(f,"\tistore %d\n",findFunctionSymbol(func_st,ast->ID[x]->lexeme));
-
-   
   }
 }
 

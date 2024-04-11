@@ -322,7 +322,15 @@ void generateStringSTCode(FILE *f, FuncDefST func_st, StringST ast){
     fprintf(f,"\tldc %s\n",ast->str->lexeme);
 }
 void generateFuncCallSTCode(FILE *f, FuncDefST func_st, FuncCallST ast){
-    //NEEDS A CHECK FOR WHEN INPUTS DONT MATCH THE DEFINITION
+    if(getNumInputs(func_st) > ast->expr_index){
+        printf("ERROR: function call has too many parameters\n");
+        exit(0);
+    }
+    else if(getNumInputs(func_st) < ast->expr_index){
+        printf("ERROR: function call missing parameters\n");
+        exit(0);
+    }
+
     for(int x=0;x<ast->expr_index;x++){
         generateExpressionSTCode(f,func_st,ast->expr_tree[x]);
     }

@@ -225,3 +225,7 @@ int isMainFunction(FuncDefST ast){
 void setFuncReturn(FuncDefST ast){
   ast->has_return = 1;
 }
+
+int getNumInputs(FuncDefST ast){
+    return ast->vardef_index;  
+}

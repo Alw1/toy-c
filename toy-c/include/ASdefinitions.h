@@ -43,5 +43,6 @@ int findFunctionSymbol(FuncDefST ast, char *id);
 int isMainFunction(FuncDefST ast);
 
 void setFuncReturn(FuncDefST ast);
+int getNumInputs(FuncDefST ast);
 
 #endif

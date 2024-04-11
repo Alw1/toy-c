@@ -11,5 +11,13 @@ int main(){
    read(b);
    write(b);
 
+    a = recursivePrint(2);
+    return 1;
+}
+
+
+int recursivePrint(){
+
+    write("Passed in:", 5, "\n");
     return 1;
 }
