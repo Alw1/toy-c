@@ -112,18 +112,21 @@ int findSymbol(SymTable st, char *id){
     return -1;
 }
 
+int findFuncSymbol(SymTable global, SymTable local, char *id){
+    //Checks if symbol is in local scope, then global.
+    //If neither, then it is undeclared and an error
 
+    for(int x=0;x<global->size;x++)
+    {
+        if(strcmp(global->arr[x]->id,id) == 0)
+            return x+2;  //TAKE THIS OUT LATER, TEMP FIX TO MAKE SCANNER WORK
+    }
 
-// int findFuncSymbol(SymTable global, SymTable local, char *id){
-//     int is_real = -1;
+    for(int x=0;x<local->size;x++){
+          if(strcmp(local->arr[x]->id,id) == 0)
+            return x+global->size+2;  //TAKE THIS OUT LATER, TEMP FIX TO MAKE SCANNER WORK
+    }
 
-//     for(int x=0;x<local->size;x++){
-//           if(strcmp(st->arr[x]->id,id) == 0)
-//             return x+1;  //TAKE THIS OUT LATER, TEMP FIX TO MAKE SCANNER WORK
-//     }
-    
-    
-
-
-
-// }
+    printf("HERE?\n");
+    return -1;
+}

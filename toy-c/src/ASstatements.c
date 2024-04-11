@@ -411,12 +411,20 @@ void generateReadSTCode(FILE* f, FuncDefST func_st, ReadStateST ast){
     fprintf(f,"\taload_1\n");
     fprintf(f,"\tinvokevirtual java/util/Scanner/nextInt()I\n");
 
-    if(findFuncSymbol(func_st,ast->ID[x]->lexeme) == -1){ 
+    if(findFunctionSymbol(func_st,ast->ID[x]->lexeme) == -1){ 
       printf("ERROR: Trying to read into undefined variable\n");
       exit(0);
     }
 
-    fprintf(f,"\tistore_%d\n",findFuncSymbol(func_st,ast->ID[x]->lexeme));
+    int offset = findFunctionSymbol(func_st,ast->ID[x]->lexeme);
+    if(offset == -1)
+        printf("ERROR: assignment to undeclared variable %s\n",ast->ID[x]->lexeme);
+    else if(offset <= 3)
+          fprintf(f,"\tistore_%d\n",findFunctionSymbol(func_st,ast->ID[x]->lexeme));
+    else 
+        fprintf(f,"\tistore %d\n",findFunctionSymbol(func_st,ast->ID[x]->lexeme));
+
+   
   }
 }
 

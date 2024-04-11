@@ -211,13 +211,7 @@ StatementST Statement(Scanner s){
     case READ: match(READ,s); statement = createStatementST(READ_STATE,ReadStatement(s)); break;
     case WRITE: match(WRITE,s); statement = createStatementST(WRITE_STATE,WriteStatement(s)); break;
     case LCURLY: statement = createStatementST(BLOCK_STATE,CompoundStatement(s)); break;
-    case ID: 
-        // if(!findSymbol(global_st,toString_ID(s->curr_token)))
-        // {
-        //     printf("ERROR: SYMBOL USED BEFORE DECLARATION %s\n", toString_ID(s->curr_token));
-        //     exit(0);
-        // }
-    case LPAREN: case NUMBER: case STRING: case CHARLITERAL: case NOT:
+    case ID: case LPAREN: case NUMBER: case STRING: case CHARLITERAL: case NOT:
     statement = createStatementST(EXPR_STATE,ExpressionStatement(s)); break;
     default:
       if(strcmp(s->curr_token->lexeme,"-") == 0){
@@ -407,8 +401,8 @@ WriteStateST WriteStatement(Scanner s){
   WriteStateST statement = createWriteStateST();
 
   match(LPAREN,s);
-  // if(getTokenType(s->curr_token) == RPAREN)
-  //   throwParseError(s,"MISSING WRITE EXPRESSION", "Expression");
+  if(getTokenType(s->curr_token) == RPAREN)
+    throwParseError(s,"MISSING WRITE EXPRESSION", "Expression");
 
   ActualParametersWriteStateST(s, statement);
   match(RPAREN,s);

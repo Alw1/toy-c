@@ -23,4 +23,6 @@ void printSymTable(SymTable st);
 //Move error functions into parser 
 void throwSemanticError(Symbol s);
 
+int findFuncSymbol(SymTable global, SymTable local, char *id);
+
 #endif

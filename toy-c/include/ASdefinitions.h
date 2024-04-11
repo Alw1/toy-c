@@ -39,7 +39,7 @@ void generateDefinitionCode(FILE *f, DefinitionST ast);
 void generateVarDefCode(FILE *f, VarDefST ast);
 void generateFuncDefCode(FILE *f, FuncDefST ast);
 
-int findFuncSymbol(FuncDefST ast, char *id);
+int findFunctionSymbol(FuncDefST ast, char *id);
 int isMainFunction(FuncDefST ast);
 
 void setFuncReturn(FuncDefST ast);

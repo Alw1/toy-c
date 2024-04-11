@@ -139,8 +139,8 @@ void printFuncSymTable(FuncDefST ast){
 }
 
 
-int findFuncSymbol(FuncDefST ast, char *id){
-     return findSymbol(ast->sym_table, id);
+int findFunctionSymbol(FuncDefST ast, char *id){
+     return findFuncSymbol(ast->global_st,ast->sym_table, id);
 }
 
 char *getVarDef_ID(VarDefST st){
@@ -196,8 +196,8 @@ void generateFuncDefCode(FILE *f, FuncDefST ast){
     if(strcmp(ast->id->lexeme,"main") != 0)
       fprintf(f,")%s\n", getTokenType(ast->type) == INT ? "I" : "C");
 
-    fprintf(f,"\t.limit locals %d\n",10);     
-    fprintf(f,"\t.limit stack %d\n",10);   
+    fprintf(f,"\t.limit locals %d\n",20);     
+    fprintf(f,"\t.limit stack %d\n",7);   
 
     fprintf(f,"\n\tnew java/util/Scanner\n");
     fprintf(f,"\tdup\n");

@@ -10,8 +10,8 @@
 .end method
 
 .method public static main([Ljava/lang/String;)V
-	.limit locals 10
-	.limit stack 10
+	.limit locals 20
+	.limit stack 7
 
 	new java/util/Scanner
 	dup
@@ -20,16 +20,16 @@
 	astore_1
 
 	bipush 0
-	istore_1 ;hueiuih
+	istore_3
 	bipush 9
-	istore_2 ;hueiuih
+	istore 4
 	bipush 5
-	istore_3 ;hueiuih
+	istore 5
 	aload_1
 	invokevirtual java/util/Scanner/nextInt()I
-	istore_2
+	istore 4
 	getstatic java/lang/System/out Ljava/io/PrintStream;
-	iload_2 ;here?
+	iload 4
 	invokestatic java/lang/Integer/toString(I)Ljava/lang/String;
 	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
 	bipush 1
