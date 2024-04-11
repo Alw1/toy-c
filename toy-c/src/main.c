@@ -57,6 +57,7 @@ int main(int argc, char *argv[]){
     if(debug_file || verbose)
         printFile(scanner->source_file);
 
+    // FILE *output = fopen(output_filename,"w");
     FILE *output = fopen("testing.j","w");
 
     if(debug_code_gen)
@@ -127,7 +128,7 @@ void parseArguments(int argc, char* argv[]){
         else if(strcmp(argv[x],"-symbol") == 0)
             debug_symbol = 1;
         else 
-              strcpy(source_filename,argv[x]);  
+            strcpy(source_filename,argv[x]);  
     }
 
    

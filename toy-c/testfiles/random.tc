@@ -1,23 +1,16 @@
 
+int a;
+
 int main(){
-    int a;
-int b;
-int c;
-
-    read(a,b,c);
-
-    write(a,b,c);
-    newline;
-
-
-    return 1;
-}
-
-
-int printshit(int x){
-
-
-    write("FUNCITON PRINT\n", x,"\n");
+    //int a;
+    int b;
+    int c;
+    a = 0;
+    b = 9;
+    c = 5;
+    
+   read(b);
+   write(b);
 
     return 1;
 }

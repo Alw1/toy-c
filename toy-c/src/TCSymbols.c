@@ -10,6 +10,23 @@
 #define MAX_SYMS 1000
 #define SYM_LEN 100
 
+/*
+    NOTE FOR THINGS TO FIX:
+    -Tables must contain reserved spots for special things to load(Scanner, etc)
+    -Tables need to take into account global symbol table before deciding the offset
+    -Tables need to factor in if a function has been declared before or after a variable
+     declaration to be used:
+        example:
+
+            int main(){
+                a =0;
+
+            }
+
+            int a;
+*/
+
+
 struct symbol_t{
     sym_type type;
     char *id;
@@ -88,7 +105,7 @@ Symbol getSymbol(SymTable st,int index){
 int findSymbol(SymTable st, char *id){
     for(int x=0;x<st->size;x++){
         if(strcmp(st->arr[x]->id,id) == 0)
-            return x;
+            return x+1;  //TAKE THIS OUT LATER, TEMP FIX TO MAKE SCANNER WORK
     }
     return -1;
 }

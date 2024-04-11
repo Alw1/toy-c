@@ -24,12 +24,6 @@ void generateJasminDirectives(FILE *f, char *source_name,char *output_name){
     fprintf(f,".super  java/lang/Object\n\n\n");      
 }
 
-void generateMethodHeader(FILE *f,char *label,char *params){
-     fprintf(f,".method public static %s(%s)I\n",label,params); 
-     fprintf(f,"\t.limit locals %d\n",MAX_LOCALS);     
-     fprintf(f,"\t.limit stack %d\n",MAX_STACK);     
-}
-
 void generateConstructor(FILE *f){
     fprintf(f,".method public <init>()V\n");
     fprintf(f,"\taload_0\n");

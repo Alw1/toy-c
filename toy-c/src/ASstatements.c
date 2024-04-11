@@ -389,15 +389,11 @@ void generateReturnSTCode(FILE* f, FuncDefST func_st, ReturnStateST ast){
     
 }
 
-
-//Not working yet
 void generateWhileSTCode(FILE* f, FuncDefST func_st, WhileStateST ast){
-    //generateExpressionSTCode(f, func_st,ast->expr_tree);
     fprintf(f,"loop:\n");
     generateExpressionSTCode(f, func_st,ast->expr_tree);
     fprintf(f,"\ticonst_0\n");
     fprintf(f,"\tif_icmpne end_loop\n");
-    //fprintf(f,"\ticonst_0\n");
     if(ast->statement_tree != NULL)
       generateStatementSTCode(f,func_st,ast->statement_tree);
     fprintf(f,"\tgoto loop\n");
