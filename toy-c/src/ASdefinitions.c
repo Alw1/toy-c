@@ -35,7 +35,7 @@ struct FuncDefST_t {
     VarDefST vardef_tree[1000];
     int vardef_index;
     BlockStateST block_state;
-   // bool has_return;
+    int has_return;
 };
 
 struct VarDefST_t {
@@ -64,7 +64,7 @@ FuncDefST createFuncDefST(Token type, Token id, SymTable global_st){
     ast->vardef_index = 0;
     ast->sym_table = createSymTable();
     ast->global_st = global_st;
-    //ast->has_return = false;
+    ast->has_return = -1;
     return ast;
 }
 
@@ -210,9 +210,18 @@ void generateFuncDefCode(FILE *f, FuncDefST ast){
 
     generateBlockSTCode(f, ast, ast->block_state);
 
+    if(ast->has_return == -1){
+        printf("ERROR:\n");
+        printf("\tFunction %s is missing a return statement\n",ast->id->lexeme);
+    }
+
     fprintf(f,".end method\n\n");
 }
 
 int isMainFunction(FuncDefST ast){
   return strcmp(ast->id->lexeme, "main");
+}
+
+void setFuncReturn(FuncDefST ast){
+  ast->has_return = 1;
 }

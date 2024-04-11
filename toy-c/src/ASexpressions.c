@@ -309,7 +309,7 @@ void generateIdSTCode(FILE *f, FuncDefST func_st, IdST ast){
         exit(0);
     }
 
-    fprintf(f,"\tiload_%d\n",offset);
+    fprintf(f,"\tiload_%d ;here?\n",offset);
 }
 void generateCharSTCode(FILE *f, FuncDefST func_st, CharST ast){
     fprintf(f,"DO NOTHING YET\n\n");
@@ -343,7 +343,11 @@ void generateExprSTCode(FILE *f, FuncDefST func_st, ExprST ast){
             //Variable Assignment
             if(ast->expr1->type == ID_EXPR && getTokenType(ast->op->op) == ASSIGNOP){
                 generateExpressionSTCode(f, func_st, ast->expr2);
-                fprintf(f,"\tistore_%d\n",findFuncSymbol(func_st,ast->expr1->id->id->lexeme));
+
+                if(findFuncSymbol(func_st,ast->expr1->id->id->lexeme) == -1)
+                    printf("ERROR: assignment to undeclared variable %s\n",ast->expr1->id->id->lexeme);
+        
+                fprintf(f,"\tistore_%d ;hueiuih\n",findFuncSymbol(func_st,ast->expr1->id->id->lexeme));
             }
         break;
         case RELOP:

@@ -19,15 +19,17 @@
 	invokespecial java/util/Scanner/<init>(Ljava/io/InputStream;)V
 	astore_1
 
+	bipush 0
+	istore_1 ;hueiuih
 	bipush 9
-	istore_2
+	istore_2 ;hueiuih
 	bipush 5
-	istore_3
+	istore_3 ;hueiuih
 	aload_1
 	invokevirtual java/util/Scanner/nextInt()I
 	istore_2
 	getstatic java/lang/System/out Ljava/io/PrintStream;
-	iload_2
+	iload_2 ;here?
 	invokestatic java/lang/Integer/toString(I)Ljava/lang/String;
 	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
 	bipush 1

@@ -42,4 +42,6 @@ void generateFuncDefCode(FILE *f, FuncDefST ast);
 int findFuncSymbol(FuncDefST ast, char *id);
 int isMainFunction(FuncDefST ast);
 
+void setFuncReturn(FuncDefST ast);
+
 #endif
