@@ -358,19 +358,21 @@ void generateBreakSTCode(FILE * f, FuncDefST func_st, BreakStateST ast){
 
 void generateIFSTCode(FILE *f, FuncDefST func_st, IfStateST ast){
     static int x = 0;
-    static int y = 0;
+    //static int y = 0;
+
+    //Maybe flip if and else placement to avoid label illegal error
+    //Note: need to be changed for recursion to work,
+    //Also check equality comparison
 
     generateExpressionSTCode(f,func_st,ast->expr_tree);
     fprintf(f,"\ticonst_0\n");
-    fprintf(f,"\tif_icmpne else_label%d\n",x);
-    generateStatementSTCode(f,func_st,ast->if_tree);
-    fprintf(f,"\tgoto end_if%d\n",y);
-    fprintf(f,"else_label%d:\n",x);
+    fprintf(f,"\tif_icmpeq if_label%d\n",x);
     if(ast->else_tree != NULL)
       generateStatementSTCode(f,func_st,ast->else_tree);
-    fprintf(f,"end_if%d:\n",y);
+    fprintf(f,"if_label%d:\n",x);
+    generateStatementSTCode(f,func_st,ast->if_tree);
     x++;
-    y++;
+   // y++;
 }
 
 void generateNullSTCode(FILE *f, FuncDefST func_st, NullStateST ast){

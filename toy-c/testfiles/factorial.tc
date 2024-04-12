@@ -2,31 +2,19 @@ int main()
 {
     int x;
     read(x);
-    //x = 1;  //factorialRecursive(5);
-    write(x);
+    write(factorialRecursive(x));
     newline;
-
-
-    if(x ==  1){
-        write("IF\n");
-    }else{
-        write("ElSE\n");
-    }
-
     return 0;
 }
 
-
-/*
 int factorialRecursive(int n) {
-    //write(n,"\n");
-    if (n == 0 ||  n == 1) {
+    write(n,"\n");
+    if (n>=1){
+        return n*factorialRecursive(n-1);
+    }
+    else{
         return 1;
     }
-    else {
-         return 2;
-        //return (n * factorial(n - 1));
-    }
 }
-*/
+
 
