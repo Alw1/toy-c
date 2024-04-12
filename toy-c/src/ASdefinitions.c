@@ -203,11 +203,11 @@ void generateFuncDefCode(FILE *f, FuncDefST ast){
     fprintf(f,"\tdup\n");
     fprintf(f,"\tgetstatic java/lang/System/in Ljava/io/InputStream;\n");
     fprintf(f,"\tinvokespecial java/util/Scanner/<init>(Ljava/io/InputStream;)V\n");
-    fprintf(f,"\tastore_1\n\n");
-
-    for(int x=0;x<ast->vardef_index;x++)
-      generateVarDefCode(f,ast->vardef_tree[x]); //Useless
-
+    if(getScannerOffset(ast) < 4)
+      fprintf(f,"\tastore_%d\n\n",getScannerOffset(ast));
+    else
+      fprintf(f,"\tastore %d\n\n",getScannerOffset(ast));
+    
     generateBlockSTCode(f, ast, ast->block_state);
 
     if(ast->has_return == -1){
@@ -228,4 +228,8 @@ void setFuncReturn(FuncDefST ast){
 
 int getNumInputs(FuncDefST ast){
     return ast->vardef_index;  
+}
+
+int getScannerOffset(FuncDefST ast){
+  return getSize(ast->sym_table) + getSize(ast->global_st);
 }

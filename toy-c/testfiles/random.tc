@@ -4,20 +4,15 @@ int main(){
     int b;
     int c;
 
-    a = 0;
-    b = 9;
-    c = 5;
-    
-   read(b);
-   write(b);
+    a = add(1,2);
 
-    a = recursivePrint(2);
     return 1;
 }
 
 
-int recursivePrint(){
+int add(int x, int y){
 
-    write("Passed in:", 5, "\n");
-    return 1;
+    read(x);
+    write("x + y = ", (x+y));
+    return (x+y);
 }

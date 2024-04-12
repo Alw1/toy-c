@@ -10,8 +10,6 @@
 #define MAX_SYMS 1000
 #define SYM_LEN 100
 
-#define RESERVED_OFFSET 3 //For giving the scanner a dedicated register
-
 /*
     NOTE FOR THINGS TO FIX:
     -Tables must contain reserved spots for special things to load(Scanner, etc)
@@ -115,18 +113,22 @@ int findSymbol(SymTable st, char *id){
 int findFuncSymbol(SymTable global, SymTable local, char *id){
     //Checks if symbol is in local scope, then global.
     //If neither, then it is undeclared and an error
+    for(int x=0;x<local->size;x++){
+          if(strcmp(local->arr[x]->id,id) == 0)
+            return x;
+    }
 
     for(int x=0;x<global->size;x++)
     {
         if(strcmp(global->arr[x]->id,id) == 0)
-            return x+2;  //TAKE THIS OUT LATER, TEMP FIX TO MAKE SCANNER WORK
+            return x+local->size;  
     }
 
-    for(int x=0;x<local->size;x++){
-          if(strcmp(local->arr[x]->id,id) == 0)
-            return x+global->size+2;  //TAKE THIS OUT LATER, TEMP FIX TO MAKE SCANNER WORK
-    }
-
-    printf("HERE?\n");
     return -1;
 }
+
+int getSize(SymTable s){
+    //Used to determine available register for Scanner
+    return s->size;
+}
+

@@ -322,15 +322,20 @@ void generateStringSTCode(FILE *f, FuncDefST func_st, StringST ast){
     fprintf(f,"\tldc %s\n",ast->str->lexeme);
 }
 void generateFuncCallSTCode(FILE *f, FuncDefST func_st, FuncCallST ast){
-    if(getNumInputs(func_st) > ast->expr_index){
-        printf("ERROR: function call has too many parameters\n");
-        exit(0);
-    }
-    else if(getNumInputs(func_st) < ast->expr_index){
-        printf("ERROR: function call missing parameters\n");
-        exit(0);
-    }
+    
+    // if(getNumInputs(func_st) > ast->expr_index){
+    //     printf("ERROR: function call has too many parameters %d %d\n",ast->expr_index, getNumInputs(func_st));
+    //     exit(0);
+    // }
+    // else if(getNumInputs(func_st) < ast->expr_index){
+    //     printf("ERROR: function call missing parameters %d %d\n",ast->expr_index, getNumInputs(func_st));
+    //     exit(0);
+    // }
 
+    /*
+        Need a way to store passed in variables at the very start of a function call
+    */
+    
     for(int x=0;x<ast->expr_index;x++){
         generateExpressionSTCode(f,func_st,ast->expr_tree[x]);
     }

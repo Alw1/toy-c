@@ -44,5 +44,6 @@ int isMainFunction(FuncDefST ast);
 
 void setFuncReturn(FuncDefST ast);
 int getNumInputs(FuncDefST ast);
+int getScannerOffset(FuncDefST ast);
 
 #endif

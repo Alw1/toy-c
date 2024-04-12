@@ -24,5 +24,8 @@ void printSymTable(SymTable st);
 void throwSemanticError(Symbol s);
 
 int findFuncSymbol(SymTable global, SymTable local, char *id);
+int getSize(SymTable s);
+
+
 
 #endif
