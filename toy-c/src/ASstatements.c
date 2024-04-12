@@ -366,7 +366,7 @@ void generateIFSTCode(FILE *f, FuncDefST func_st, IfStateST ast){
     if(ast->else_tree != NULL)
       generateStatementSTCode(f,func_st,ast->else_tree);
     fprintf(f,"end_if:\n");
-    fprintf(f,"\tbreak:\n");
+
 }
 
 void generateNullSTCode(FILE *f, FuncDefST func_st, NullStateST ast){

@@ -1,19 +1,51 @@
 int main()
 {
     int x;
-    x = factorial(5);
-
-    write(x);
+   // x = factorial(5);
+    //write(x);
     newline;
-
+   // x = factorialRecursive(5);
+    
+    breakTest();
     return 0;
 }
 
-int factorial(int n) {
-    if (n == 0 || n == 1) {
-        return 1;
+int factorial(int x)
+{
+    int result;
+    result = 1; 
+    int i;
+    i = 2;
+    while(i<=x){
+        result = result * i;
+        i = i + 1;
+        write(result);
+        newline;
     }
-    else {
-        return n * factorial(n - 1);
-    }
+    return result;
 }
+
+int breakTest(){
+    int i;
+    i = 0;
+    while(i<20){
+
+        write(i);
+        newline;
+        i = i+1;
+    }
+    return 1;
+}
+
+
+/*
+    int factorialRecursive(int n) {
+        if (n == 0 ||  n == 1) {
+            return 1;
+        }
+        else {
+            return (n * factorial(n - 1));
+        }
+    }
+*/
+

@@ -17,18 +17,12 @@
 	dup
 	getstatic java/lang/System/in Ljava/io/InputStream;
 	invokespecial java/util/Scanner/<init>(Ljava/io/InputStream;)V
-	astore_3
+	astore 4
 
-	bipush 5
-	invokestatic s/factorial(I)I
-	istore_0
-	getstatic java/lang/System/out Ljava/io/PrintStream;
-	iload_0
-	invokestatic java/lang/Integer/toString(I)Ljava/lang/String;
-	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
 	getstatic java/lang/System/out Ljava/io/PrintStream;
 	ldc "\n"
 	invokevirtual java/io/PrintStream.print(Ljava/lang/String;)V
+	invokestatic s/breakTest()I
 	bipush 0
 	return
 .end method
@@ -41,39 +35,83 @@
 	dup
 	getstatic java/lang/System/in Ljava/io/InputStream;
 	invokespecial java/util/Scanner/<init>(Ljava/io/InputStream;)V
-	astore_3
+	astore 6
 
+	bipush 1
+	istore_1
+	bipush 2
+	istore_2
+loop:
+	iload_2
 	iload_0
-	bipush 0
-	iload_0
-	ior
-	if_icmpeq label_0
+	if_icmple label_0
 	iconst_1
 	goto label_1
 label_0:
 	iconst_0
 label_1:
-	bipush 1
-	if_icmpeq label_0
-	iconst_1
-	goto label_1
-label_0:
 	iconst_0
-label_1:
-	iconst_0
-	if_icmpne else_label
-	bipush 1
-	ireturn
-	goto end_if
-else_label:
-	iload_0
-	iload_0
-	bipush 1
-	isub
-	invokestatic s/factorial(I)I
+	if_icmpne end_loop
+	iload_1
+	iload_2
 	imul
+	istore_1
+	iload_2
+	bipush 1
+	iadd
+	istore_2
+	getstatic java/lang/System/out Ljava/io/PrintStream;
+	iload_1
+	invokestatic java/lang/Integer/toString(I)Ljava/lang/String;
+	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
+	getstatic java/lang/System/out Ljava/io/PrintStream;
+	ldc "\n"
+	invokevirtual java/io/PrintStream.print(Ljava/lang/String;)V
+	goto loop
+end_loop:
+break:
+	iload_1
 	ireturn
-end_if:
-	break:
+.end method
+
+.method public static breakTest()I
+	.limit locals 20
+	.limit stack 7
+
+	new java/util/Scanner
+	dup
+	getstatic java/lang/System/in Ljava/io/InputStream;
+	invokespecial java/util/Scanner/<init>(Ljava/io/InputStream;)V
+	astore 4
+
+	bipush 0
+	istore_0
+loop:
+	iload_0
+	bipush 20
+	if_icmplt label_0
+	iconst_1
+	goto label_1
+label_0:
+	iconst_0
+label_1:
+	iconst_0
+	if_icmpne end_loop
+	getstatic java/lang/System/out Ljava/io/PrintStream;
+	iload_0
+	invokestatic java/lang/Integer/toString(I)Ljava/lang/String;
+	invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
+	getstatic java/lang/System/out Ljava/io/PrintStream;
+	ldc "\n"
+	invokevirtual java/io/PrintStream.print(Ljava/lang/String;)V
+	iload_0
+	bipush 1
+	iadd
+	istore_0
+	goto loop
+end_loop:
+break:
+	bipush 1
+	ireturn
 .end method
 
