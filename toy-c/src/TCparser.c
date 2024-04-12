@@ -32,15 +32,6 @@ void throwParseError(Scanner s,char *error_type, char *message){
     exit(0);
 }
 
-// void throwSemanticError(Symbol s){
-//     printf("\nERROR: %s is undefined\n", s->id);
-//     printf("%d: %s",s->line_num,s->curr_line);
-    
-//     for(int x=0;x<s->line_pos+2;x++)
-//         printf(" ");
-//     exit(0);
-// }
-
 void load_sym(Scanner s){ 
   if(debug_scanner || verbose)
     printToken(s->curr_token);

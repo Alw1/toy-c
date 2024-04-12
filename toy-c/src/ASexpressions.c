@@ -294,8 +294,23 @@ void generateReturnExpressionSTCode(FILE *f,FuncDefST func_st,ExpressionST ast){
         printf("ERROR: Return type does not match the returned value\n");
         exit(0);
     }       
-
 }
+
+// void generateAssignmentExpressionSTCode(FILE *f,FuncDefST func_st,ExpressionST ast){
+//         switch(ast->type){
+//         case NUM_EXPR:   generateNumberSTCode(f,func_st, ast->num);    break;
+//         case ID_EXPR:    generateIdSTCode(f, func_st, ast->id);    break;
+//         // case CHAR_EXPR:   generateCharSTCode(f, func_st, ast->chr); break;
+//         // case STRING_EXPR:   generateStringSTCode(f, func_st, ast->str); break;
+//         case FUNC_CALL_EXPR:   generateFuncCallSTCode(f, func_st, ast->func_call);    break;
+//         case EXPR_EXPR:   generateExprSTCode(f, func_st, ast->expr_tree);    break;
+//         case MINUS_EXPR:   generateMinusSTCode(f, func_st, ast->minus_tree);    break;
+//         case NOT_EXPR:   generateNotSTCode(f, func_st, ast->not_tree);    break;
+//         default:
+//         printf("ERROR: type does not match the assigned value\n");
+//         exit(0);
+//     }       
+// }
 
 void generateNumberSTCode(FILE *f, FuncDefST func_st, NumberST ast){
     fprintf(f,"\tbipush %s\n", ast->num->lexeme);
@@ -359,6 +374,9 @@ void generateExprSTCode(FILE *f, FuncDefST func_st, ExprST ast){
             //Variable Assignment
             if(ast->expr1->type == ID_EXPR && getTokenType(ast->op->op) == ASSIGNOP){
                 generateExpressionSTCode(f, func_st, ast->expr2);
+                
+               // generateAssignmentExpressionSTCode();
+                //Need a typecheck here;
 
                 int offset = findFunctionSymbol(func_st,ast->expr1->id->id->lexeme);
                 if(offset == -1)

@@ -358,12 +358,6 @@ void generateBreakSTCode(FILE * f, FuncDefST func_st, BreakStateST ast){
 
 void generateIFSTCode(FILE *f, FuncDefST func_st, IfStateST ast){
     static int x = 0;
-    //static int y = 0;
-
-    //Maybe flip if and else placement to avoid label illegal error
-    //Note: need to be changed for recursion to work,
-    //Also check equality comparison
-
     generateExpressionSTCode(f,func_st,ast->expr_tree);
     fprintf(f,"\ticonst_0\n");
     fprintf(f,"\tif_icmpeq if_label%d\n",x);
@@ -372,7 +366,6 @@ void generateIFSTCode(FILE *f, FuncDefST func_st, IfStateST ast){
     fprintf(f,"if_label%d:\n",x);
     generateStatementSTCode(f,func_st,ast->if_tree);
     x++;
-   // y++;
 }
 
 void generateNullSTCode(FILE *f, FuncDefST func_st, NullStateST ast){
@@ -413,7 +406,10 @@ void generateWhileSTCode(FILE* f, FuncDefST func_st, WhileStateST ast){
 
 void generateReadSTCode(FILE* f, FuncDefST func_st, ReadStateST ast){
   for(int x=0;x<ast->id_index;x++){
-    fprintf(f,"\taload_%d\n",getScannerOffset(func_st));
+    if(getScannerOffset(func_st) < 4)
+      fprintf(f,"\taload_%d\n",getScannerOffset(func_st));
+    else 
+      fprintf(f,"\taload %d\n",getScannerOffset(func_st));
     fprintf(f,"\tinvokevirtual java/util/Scanner/nextInt()I\n");
 
     if(findFunctionSymbol(func_st,ast->ID[x]->lexeme) == -1){ 
