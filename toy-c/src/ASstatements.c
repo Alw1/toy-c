@@ -353,20 +353,24 @@ void generateExpressionStateSTCode(FILE *f,FuncDefST func_st,ExpressionStateST a
 }
 
 void generateBreakSTCode(FILE * f, FuncDefST func_st, BreakStateST ast){
-    fprintf(f,"\tgoto break\n");
+    //fprintf(f,"\tgoto break\n");
 }
 
 void generateIFSTCode(FILE *f, FuncDefST func_st, IfStateST ast){
+    static int x = 0;
+    static int y = 0;
+
     generateExpressionSTCode(f,func_st,ast->expr_tree);
     fprintf(f,"\ticonst_0\n");
-    fprintf(f,"\tif_icmpne else_label\n");
+    fprintf(f,"\tif_icmpne else_label%d\n",x);
     generateStatementSTCode(f,func_st,ast->if_tree);
-    fprintf(f,"\tgoto end_if\n");
-    fprintf(f,"else_label:\n");
+    fprintf(f,"\tgoto end_if%d\n",y);
+    fprintf(f,"else_label%d:\n",x);
     if(ast->else_tree != NULL)
       generateStatementSTCode(f,func_st,ast->else_tree);
-    fprintf(f,"end_if:\n");
-
+    fprintf(f,"end_if%d:\n",y);
+    x++;
+    y++;
 }
 
 void generateNullSTCode(FILE *f, FuncDefST func_st, NullStateST ast){
@@ -391,21 +395,23 @@ void generateReturnSTCode(FILE* f, FuncDefST func_st, ReturnStateST ast){
 }
 
 void generateWhileSTCode(FILE* f, FuncDefST func_st, WhileStateST ast){
-    fprintf(f,"loop:\n");
+    static int loop_start = 0;
+    static int loop_end = 0;
+    fprintf(f,"loop%d:\n",loop_start);
     generateExpressionSTCode(f, func_st,ast->expr_tree);
     fprintf(f,"\ticonst_0\n");
-    fprintf(f,"\tif_icmpne end_loop\n");
+    fprintf(f,"\tif_icmpne end_loop%d\n",loop_end);
     if(ast->statement_tree != NULL)
       generateStatementSTCode(f,func_st,ast->statement_tree);
-    fprintf(f,"\tgoto loop\n");
-    fprintf(f,"end_loop:\n");
-    fprintf(f,"break:\n");
+    fprintf(f,"\tgoto loop%d\n",loop_start);
+    fprintf(f,"end_loop%d:\n",loop_end);
+   // fprintf(f,"break:\n");
 }
 
 
 void generateReadSTCode(FILE* f, FuncDefST func_st, ReadStateST ast){
   for(int x=0;x<ast->id_index;x++){
-    fprintf(f,"\taload_1\n");
+    fprintf(f,"\taload_%d\n",getScannerOffset(func_st));
     fprintf(f,"\tinvokevirtual java/util/Scanner/nextInt()I\n");
 
     if(findFunctionSymbol(func_st,ast->ID[x]->lexeme) == -1){ 
