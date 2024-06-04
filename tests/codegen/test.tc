@@ -1,0 +1,18 @@
+int main(){
+  int a;
+  int b;
+
+  a = 1;
+  b = testfunc();
+
+  write(a+b);
+  newline;
+
+}
+
+
+int testfunc(){
+  write("This is a function");
+  newline;
+  return 1;
+}
